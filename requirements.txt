@@ -1,0 +1,2 @@
+web3==7.15.0
+web3[tester]
