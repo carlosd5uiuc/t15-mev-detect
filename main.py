@@ -3,22 +3,26 @@ import argparse
 from blockchain_fetcher import BlockchainFetcher
 from mev_types.arbitrage import calculate_arbitrage
 
-def print_arbitrage_table(rows: list[dict], block_number: int) -> None:
+def print_arbitrage_table(rows: list[dict], block_number: int | None = None) -> None:
     if not rows:
         print("No arbitrage results found.")
         return
 
-    headers = ["Tx", "Block", "Address", "Token", "Value"]
+    headers = ["Tx", "Address", "Token", "Value"]
+    if block_number is not None:
+        headers.insert(1, "Block")
 
     table_rows = []
     for row in rows:
-        table_rows.append([
+        current_row = [
             row["tx"],
-            str(block_number),
             row["address"],
             row["token"],
             f'{row["value"]:.6f}',
-        ])
+        ]
+        if block_number is not None:
+            current_row.insert(1, str(block_number))
+        table_rows.append(current_row)
 
     col_widths = [
         max(len(headers[i]), max(len(r[i]) for r in table_rows))
@@ -57,7 +61,16 @@ def main() -> None:
     if args.command == "tx":
         transfers = client.fetch_transfer_by_tx(args.id)
         arbitrage_result = calculate_arbitrage(transfers)
-        print(arbitrage_result)
+        table_data = []
+        for item in arbitrage_result:
+            table_data.append({
+                "tx": args.id,
+                "address": item["address"],
+                "token": item["token"],
+                "value": item["value"],
+            })
+
+        print_arbitrage_table(table_data)
 
     elif args.command == "block":
         txs = client.fetch_block_transactions(args.id)
