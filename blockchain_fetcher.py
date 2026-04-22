@@ -1,4 +1,3 @@
-import argparse
 import os
 import logging
 import csv
@@ -8,14 +7,17 @@ from dotenv import load_dotenv
 from web3 import Web3
 
 logging.basicConfig(level=logging.INFO)
-from arbitrage import calculate_arbitrage
 
 load_dotenv()
 rpc_url_key = os.getenv("RPC_URL_KEY")
 
 class Transaction:
     def __init__(self, tx_hash, from_addr, to_addr, **kwargs):
-        self.tx_hash = tx_hash if isinstance(tx_hash, str) else tx_hash.hex()
+        if isinstance(tx_hash, str):
+            self.tx_hash = tx_hash if tx_hash.startswith("0x") else f"0x{tx_hash}"
+        else:
+            hex_value = tx_hash.hex()
+            self.tx_hash = hex_value if hex_value.startswith("0x") else f"0x{hex_value}"
         self.to_addr = to_addr
         self.from_addr = from_addr
 
@@ -70,7 +72,7 @@ class BlockchainFetcher:
 
         transfers = []
         for log in receipt["logs"]:
-            if log["topics"][0].hex() == self.TRANSFER_TOPIC:
+            if log['topics'] and log["topics"][0].hex() == self.TRANSFER_TOPIC:
                 erc20_abi = [
                                 {
                                     "name": "decimals",
@@ -99,30 +101,3 @@ class BlockchainFetcher:
     def get_mempool_pending(self) -> List[Transaction]:
         pass
 
-def parse_args():
-    parser = argparse.ArgumentParser(description="Fetch blockchain data by block or transaction")
-    subparsers = parser.add_subparsers(dest="command", required=True)
-
-    block_parser = subparsers.add_parser("block", help="Fetch by block number")
-    block_parser.add_argument("id", type=int, help="Block number")
-
-    tx_parser = subparsers.add_parser("tx", help="Fetch by transaction hash")
-    tx_parser.add_argument("id", type=str, help="Transaction hash")
-
-    return parser.parse_args()
-
-def main() -> None:
-    args = parse_args()
-    client = BlockchainFetcher()
-
-    if args.command == "tx":
-        tx = client.fetch_transfer_by_tx(args.id)
-        arbitrage_result = calculate_arbitrage(tx)
-        print(arbitrage_result)
-
-    elif args.command == "block":
-        txs = client.fetch_block_transactions(args.id)
-        print(txs)
-    
-if __name__ == "__main__":
-    main()
