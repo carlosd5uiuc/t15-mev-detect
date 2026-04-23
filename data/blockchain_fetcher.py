@@ -9,19 +9,37 @@ from web3 import Web3
 
 logging.basicConfig(level=logging.INFO)
 from arbitrage import calculate_arbitrage
+from frontrun import detect_front_running
+from sandwich import detect_sandwich_attacks
 
 load_dotenv()
 rpc_url_key = os.getenv("RPC_URL_KEY")
 
 class Transaction:
-    def __init__(self, tx_hash, from_addr, to_addr, **kwargs):
+    def __init__(
+        self,
+        tx_hash,
+        from_addr,
+        to_addr,
+        block_height=None,
+        timestamp=None,
+        gas_price=None,
+        value=None,
+        **kwargs
+    ):
         self.tx_hash = tx_hash if isinstance(tx_hash, str) else tx_hash.hex()
-        self.to_addr = to_addr
         self.from_addr = from_addr
+        self.to_addr = to_addr
+
+        # MEV fields (optional)
+        self.block_height = block_height
+        self.timestamp = timestamp
+        self.gasPrice = gas_price
+        self.value = value
 
     def __repr__(self):
-        return f"Tx({self.tx_hash}, from={self.from_addr}, to={self.to_addr})"
-
+        return f"Tx({self.tx_hash}, from={self.from_addr}, to={self.to_addr})" 
+    
 class SwapEvent:
     pass
 
@@ -35,7 +53,18 @@ class BlockchainFetcher:
         if block_number is None:
             block_number = 'latest'
         block = self.web3_client.eth.get_block(block_number, full_transactions=True)
-        return [Transaction(tx['hash'], tx['from'], tx['to']) for tx in block['transactions']]
+        # return [Transaction(tx['hash'], tx['from'], tx['to']) for tx in block['transactions']]
+        return [Transaction(
+            tx_hash=tx["hash"],
+            from_addr=tx["from"],
+            to_addr=tx["to"] if tx["to"] else None,
+            block_height=block["number"],
+            timestamp=None,          # optional (not directly in eth_getBlock)
+            gas_price=tx.get("gasPrice"),
+            value=tx.get("value", 0),
+        )   
+    for tx in block["transactions"]
+]
     
     def fetch_transaction_by_tx(self, tx_hash):
         return self.web3_client.eth.get_transaction(tx_hash)
@@ -53,9 +82,15 @@ class BlockchainFetcher:
 
                 transactions.append(
                     Transaction(
-                        row["hash"],
-                        row["from"],
-                        row["to"] or None,
+                        tx_hash=row["hash"],
+                        from_addr=row["from"],
+                        to_addr=row["to"] or None,
+
+                        # 🔥 ADD THESE FOR FRONT-RUNNING
+                        block_height=int(row["included_at_block_height"]) if row.get("included_at_block_height") else None,
+                        timestamp=int(row["timestamp_ms"]) if row.get("timestamp_ms") else None,
+                        gas_price=int(row["gas_price"]) if row.get("gas_price") else None,
+                        value=int(row["value"]) if row.get("value") else 0,
                     )
                 )
 
@@ -109,6 +144,15 @@ def parse_args():
     tx_parser = subparsers.add_parser("tx", help="Fetch by transaction hash")
     tx_parser.add_argument("id", type=str, help="Transaction hash")
 
+    # frontrun_parser = subparsers.add_parser("frontrun", help="Detect MEV front-running")
+    # frontrun_parser.add_argument("id", type=int, help="Block number")
+
+    api_frontrun_parser = subparsers.add_parser("api-frontrun")
+    api_frontrun_parser.add_argument("id", type=int)
+
+    sandwich_parser = subparsers.add_parser("sandwich", help="Detect sandwich attacks (API)")
+    sandwich_parser.add_argument("id", type=int, help="Block number")
+
     return parser.parse_args()
 
 def main() -> None:
@@ -123,6 +167,22 @@ def main() -> None:
     elif args.command == "block":
         txs = client.fetch_block_transactions(args.id)
         print(txs)
+    
+    #for front running with the csv data
+    # elif args.command == "frontrun":
+    #     txs = client.fetch_local_transactions(args.id)
+    #     result = detect_front_running(txs)
+    #     print(result)
+    
+    elif args.command == "frontrun":
+        txs = client.fetch_block_transactions(args.id)
+        result = detect_front_running(txs)
+        print(result)
+    
+    elif args.command == "sandwich":
+        txs = client.fetch_block_transactions(args.id)
+        result = detect_sandwich_attacks(txs)
+        print(result)
     
 if __name__ == "__main__":
     main()
