@@ -2,6 +2,8 @@ import argparse
 
 from blockchain_fetcher import BlockchainFetcher
 from mev_types.arbitrage import calculate_arbitrage
+from mev_types.frontrun import detect_front_running
+from mev_types.sandwich import detect_sandwich_attacks
 
 def print_arbitrage_table(rows: list[dict], block_number: int | None = None) -> None:
     if not rows:
@@ -40,17 +42,28 @@ def print_arbitrage_table(rows: list[dict], block_number: int | None = None) -> 
         print(format_row(row))
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Fetch blockchain data by block or transaction")
-    subparsers = parser.add_subparsers(dest="command", required=True)
+    parser = argparse.ArgumentParser(
+        description="Fetch blockchain data by block or transaction"
+    )
 
-    block_parser = subparsers.add_parser("block", help="Fetch by block number")
+    mev_subparsers = parser.add_subparsers(dest="mev_type", required=True)
+
+    arbitrage_parser = mev_subparsers.add_parser("arbitrage", help="Arbitrage mode")
+    arbitrage_subparsers = arbitrage_parser.add_subparsers(dest="command", required=True)
+
+    block_parser = arbitrage_subparsers.add_parser("block", help="Fetch by block number")
     block_parser.add_argument("id", type=int, help="Block number")
-
     block_parser.add_argument("start", type=int, help="Start tx index (inclusive)")
     block_parser.add_argument("end", type=int, help="End tx index (exclusive)")
 
-    tx_parser = subparsers.add_parser("tx", help="Fetch by transaction hash")
+    tx_parser = arbitrage_subparsers.add_parser("tx", help="Fetch by transaction hash")
     tx_parser.add_argument("id", type=str, help="Transaction hash")
+
+    sandwich_parser = mev_subparsers.add_parser("sandwich", help="Sandwich mode")
+    sandwich_parser.add_argument("id", type=int, help="Block number")
+
+    frontrun_parser = mev_subparsers.add_parser("frontrun", help="Frontrun mode")
+    frontrun_parser.add_argument("id", type=int, help="Block number")
 
     return parser.parse_args()
 
@@ -58,39 +71,55 @@ def main() -> None:
     args = parse_args()
     client = BlockchainFetcher()
 
-    if args.command == "tx":
-        transfers = client.fetch_transfer_by_tx(args.id)
-        arbitrage_result = calculate_arbitrage(transfers)
-        table_data = []
-        for item in arbitrage_result:
-            table_data.append({
-                "tx": args.id,
-                "address": item["address"],
-                "token": item["token"],
-                "value": item["value"],
-            })
+    if args.mev_type == "arbitrage":
+        if args.command == "tx":
+            transfers = client.fetch_transfer_by_tx(args.id)
+            arbitrage_result = calculate_arbitrage(transfers)
+            table_data = []
+            for item in arbitrage_result:
+                table_data.append({
+                    "tx": args.id,
+                    "address": item["address"],
+                    "token": item["token"],
+                    "value": item["value"],
+                })
 
-        print_arbitrage_table(table_data)
+            print_arbitrage_table(table_data)
 
-    elif args.command == "block":
+        elif args.command == "block":
+            txs = client.fetch_block_transactions(args.id)
+
+            selected_txs = txs[args.start:args.end]
+            table_data = []
+            for tx in selected_txs:
+                transfers = client.fetch_transfer_by_tx(tx.tx_hash)
+                result = calculate_arbitrage(transfers)
+
+                if len(result):
+                    for item in result:
+                        table_data.append({
+                            "tx": tx.tx_hash,
+                            "address": item["address"],
+                            "token": item["token"],
+                            "value": item["value"],
+                        })
+
+            print_arbitrage_table(table_data, args.id)
+    
+    elif args.mev_type == "frontrun":
+        txs = client.fetch_local_transactions(args.id)
+        result = detect_front_running(txs)
+        print(result)
+    
+    elif args.mev_type == "api-frontrun":
         txs = client.fetch_block_transactions(args.id)
-
-        selected_txs = txs[args.start:args.end]
-        table_data = []
-        for tx in selected_txs:
-            transfers = client.fetch_transfer_by_tx(tx.tx_hash)
-            result = calculate_arbitrage(transfers)
-
-            if len(result):
-                for item in result:
-                    table_data.append({
-                        "tx": tx.tx_hash,
-                        "address": item["address"],
-                        "token": item["token"],
-                        "value": item["value"],
-                    })
-
-        print_arbitrage_table(table_data, args.id)
+        result = detect_front_running(txs)
+        print(result)
+    
+    elif args.mev_type == "sandwich":
+        txs = client.fetch_local_transactions(args.id)
+        result = detect_sandwich_attacks(txs)
+        print(result)
     
 if __name__ == "__main__":
     main()
