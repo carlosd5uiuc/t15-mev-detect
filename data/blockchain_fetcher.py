@@ -70,24 +70,37 @@ class BlockchainFetcher:
         return self.web3_client.eth.get_transaction(tx_hash)
     
     def fetch_local_transactions(self, block_number: Optional[int] = None) -> List[Transaction]:
-        csv_path = Path(__file__).with_name("2026-03-01-100k.csv")
+        csv_path = Path(__file__).with_name("demo.csv")
         transactions: List[Transaction] = []
 
         with csv_path.open(newline="", encoding="utf-8") as f:
             reader = csv.DictReader(f)
 
             for row in reader:
-                if block_number is not None and int(row["included_at_block_height"]) != block_number:
-                    continue
 
+                # ----------------------------
+                # SAFE BLOCK HEIGHT HANDLING
+                # ----------------------------
+                block_height_raw = row.get("included_at_block_height")
+
+                # skip malformed rows safely
+                if block_number is not None:
+                    if not block_height_raw:
+                        continue
+                    if int(block_height_raw) != block_number:
+                        continue
+
+                # ----------------------------
+                # SAFE FIELD PARSING
+                # ----------------------------
                 transactions.append(
                     Transaction(
                         tx_hash=row["hash"],
                         from_addr=row["from"],
                         to_addr=row["to"] or None,
 
-                        # 🔥 ADD THESE FOR FRONT-RUNNING
-                        block_height=int(row["included_at_block_height"]) if row.get("included_at_block_height") else None,
+                        # MEV fields (safe casts)
+                        block_height=int(block_height_raw) if block_height_raw else None,
                         timestamp=int(row["timestamp_ms"]) if row.get("timestamp_ms") else None,
                         gas_price=int(row["gas_price"]) if row.get("gas_price") else None,
                         value=int(row["value"]) if row.get("value") else 0,
@@ -144,8 +157,8 @@ def parse_args():
     tx_parser = subparsers.add_parser("tx", help="Fetch by transaction hash")
     tx_parser.add_argument("id", type=str, help="Transaction hash")
 
-    # frontrun_parser = subparsers.add_parser("frontrun", help="Detect MEV front-running")
-    # frontrun_parser.add_argument("id", type=int, help="Block number")
+    frontrun_parser = subparsers.add_parser("frontrun", help="Detect MEV front-running")
+    frontrun_parser.add_argument("id", type=int, help="Block number")
 
     api_frontrun_parser = subparsers.add_parser("api-frontrun")
     api_frontrun_parser.add_argument("id", type=int)
@@ -169,18 +182,18 @@ def main() -> None:
         print(txs)
     
     #for front running with the csv data
-    # elif args.command == "frontrun":
-    #     txs = client.fetch_local_transactions(args.id)
-    #     result = detect_front_running(txs)
-    #     print(result)
-    
     elif args.command == "frontrun":
+        txs = client.fetch_local_transactions(args.id)
+        result = detect_front_running(txs)
+        print(result)
+    
+    elif args.command == "api-frontrun":
         txs = client.fetch_block_transactions(args.id)
         result = detect_front_running(txs)
         print(result)
     
     elif args.command == "sandwich":
-        txs = client.fetch_block_transactions(args.id)
+        txs = client.fetch_local_transactions(args.id)
         result = detect_sandwich_attacks(txs)
         print(result)
     
