@@ -1,4 +1,5 @@
 import networkx as nx
+from collections import defaultdict
 
 def build_directed_graph(transfers):
     g = nx.DiGraph()
@@ -15,13 +16,17 @@ def build_scss_list(d_graph):
     return list(nx.strongly_connected_components(d_graph))
 
 def build_pnl_table(sccs, transfers):
-    from collections import defaultdict
-    component = sccs[0]
     pnl = defaultdict(lambda: defaultdict(float))
-    for t in transfers:
-        if t["from"] in component and t["to"] in component:
-            pnl[t["from"]][t["token"]] -= t["value"]
-            pnl[t["to"]][t["token"]] += t["value"]
+
+    if not sccs:
+        return pnl
+
+    for component in sccs:
+        for t in transfers:
+            if t["from"] in component and t["to"] in component:
+                pnl[t["from"]][t["token"]] -= t["value"]
+                pnl[t["to"]][t["token"]] += t["value"]
+
     return pnl
 
 def extract_arbitrageurs(pnl_table, tol=1e-3):
@@ -45,6 +50,9 @@ def extract_arbitrageurs(pnl_table, tol=1e-3):
 def calculate_arbitrage(transfers):
     directed_graph = build_directed_graph(transfers)
     sccs_list = build_scss_list(directed_graph)
+    # print("SCCs:", sccs_list)
+
     pnl = build_pnl_table(sccs_list, transfers)
+    # print("PnL:", dict(pnl))
     result = extract_arbitrageurs(pnl)
     return result

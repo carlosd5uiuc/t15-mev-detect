@@ -1,16 +1,16 @@
-import argparse
 import os
 import logging
 import csv
+import argparse
 from pathlib import Path
 from typing import List, Optional
 from dotenv import load_dotenv
 from web3 import Web3
 
 logging.basicConfig(level=logging.INFO)
-from arbitrage import calculate_arbitrage
-from frontrun import detect_front_running
-from sandwich import detect_sandwich_attacks
+from mev_types.arbitrage import calculate_arbitrage
+from mev_types.frontrun import detect_front_running
+from mev_types.sandwich import detect_sandwich_attacks
 
 load_dotenv()
 rpc_url_key = os.getenv("RPC_URL_KEY")
@@ -27,7 +27,13 @@ class Transaction:
         value=None,
         **kwargs
     ):
-        self.tx_hash = tx_hash if isinstance(tx_hash, str) else tx_hash.hex()
+        # self.tx_hash = tx_hash if isinstance(tx_hash, str) else tx_hash.hex()
+        if isinstance(tx_hash, str):
+            self.tx_hash = tx_hash if tx_hash.startswith("0x") else f"0x{tx_hash}"
+        else:
+            hex_value = tx_hash.hex()
+            self.tx_hash = hex_value if hex_value.startswith("0x") else f"0x{hex_value}"
+        self.to_addr = to_addr
         self.from_addr = from_addr
         self.to_addr = to_addr
 
@@ -70,7 +76,7 @@ class BlockchainFetcher:
         return self.web3_client.eth.get_transaction(tx_hash)
     
     def fetch_local_transactions(self, block_number: Optional[int] = None) -> List[Transaction]:
-        csv_path = Path(__file__).with_name("demo.csv")
+        csv_path = Path(__file__).parent / "data" / "demo.csv"
         transactions: List[Transaction] = []
 
         with csv_path.open(newline="", encoding="utf-8") as f:
@@ -118,7 +124,7 @@ class BlockchainFetcher:
 
         transfers = []
         for log in receipt["logs"]:
-            if log["topics"][0].hex() == self.TRANSFER_TOPIC:
+            if log['topics'] and log["topics"][0].hex() == self.TRANSFER_TOPIC:
                 erc20_abi = [
                                 {
                                     "name": "decimals",
