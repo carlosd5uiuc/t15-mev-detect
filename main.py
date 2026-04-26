@@ -87,18 +87,17 @@ def main() -> None:
             print_arbitrage_table(table_data)
 
         elif args.command == "block":
-            txs = client.fetch_block_transactions(args.id)
+            tx_transfers = client.fetch_transfers_by_block_from_cache(args.id)
 
-            selected_txs = txs[args.start:args.end]
             table_data = []
-            for tx in selected_txs:
-                transfers = client.fetch_transfer_by_tx(tx.tx_hash)
+
+            for tx_hash, transfers in tx_transfers.items():
                 result = calculate_arbitrage(transfers)
 
                 if len(result):
                     for item in result:
                         table_data.append({
-                            "tx": tx.tx_hash,
+                            "tx": tx_hash,
                             "address": item["address"],
                             "token": item["token"],
                             "value": item["value"],

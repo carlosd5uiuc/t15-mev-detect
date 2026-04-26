@@ -54,6 +54,21 @@ class BlockchainFetcher:
         self.web3_client = Web3(Web3.HTTPProvider(f"https://mainnet.infura.io/v3/{rpc_url_key}"))
         self.web3_client.is_connected()
         self.TRANSFER_TOPIC = self.web3_client.keccak(text="Transfer(address,address,uint256)").hex()
+        self.token_decimals_cache = {}
+
+    def fetch_transfers_by_block_from_cache(self, block_number):
+        from receipt_cache import get_block_receipts
+        payload = get_block_receipts(block_number)
+
+        tx_transfers = {}
+
+        for tx_hash, receipt in payload["receipts"].items():
+            transfers = self.extract_transfers_from_receipt(receipt)
+
+            if transfers:
+                tx_transfers[tx_hash] = transfers
+
+        return tx_transfers
 
     def fetch_block_transactions(self, block_number: Optional[int] = None) -> List[Transaction]:
         if block_number is None:
@@ -115,36 +130,100 @@ class BlockchainFetcher:
 
         return transactions
     
+    def extract_transfers_from_receipt(self, receipt):
+        transfers = []
+
+        for log in receipt["logs"]:
+            topics = log.get("topics", [])
+
+            if len(topics) < 3:
+                continue
+
+            topic0 = topics[0]
+
+            # Cached receipts store topics as strings.
+            # Live Web3 receipts store topics as HexBytes.
+            if not isinstance(topic0, str):
+                topic0 = topic0.hex()
+
+            if log["topics"] and topic0 == self.TRANSFER_TOPIC:
+                data = log.get("data")
+                if data in (None, "", "0x"):
+                    continue
+
+                if isinstance(data, str):
+                    if not data.startswith("0x"):
+                        data = "0x" + data
+
+                    raw_value = Web3.to_int(hexstr=data)
+                else:
+                    raw_value = Web3.to_int(data)
+
+                erc20_abi = [
+                    {
+                        "name": "decimals",
+                        "outputs": [{"type": "uint8"}],
+                        "inputs": [],
+                        "stateMutability": "view",
+                        "type": "function",
+                    }
+                ]
+
+                # token = self.web3_client.eth.contract(
+                #     address=log["address"],
+                #     abi=erc20_abi,
+                # )
+
+                # try:
+                #     decimals = token.functions.decimals().call()
+                # except Exception as e:
+                #     logging.warning(f"Could not fetch decimals for token {log['address']}: {e}")
+                #     decimals = 18
+
+                token_address = log["address"]
+
+                if token_address in self.token_decimals_cache:
+                    decimals = self.token_decimals_cache[token_address]
+                else:
+                    token = self.web3_client.eth.contract(
+                        address=token_address,
+                        abi=erc20_abi,
+                    )
+
+                    try:
+                        decimals = token.functions.decimals().call()
+                    except Exception as e:
+                        logging.warning(f"Could not fetch decimals for token {token_address}: {e}")
+                        decimals = 18
+
+                    self.token_decimals_cache[token_address] = decimals
+
+                topic1 = topics[1]
+                topic2 = topics[2]
+
+                if not isinstance(topic1, str):
+                    topic1 = topic1.hex()
+
+                if not isinstance(topic2, str):
+                    topic2 = topic2.hex()
+
+                transfers.append({
+                    "token": token_address,
+                    "from": "0x" + topic1[-40:],
+                    "to": "0x" + topic2[-40:],
+                    "value": raw_value / (10 ** decimals),
+                })
+
+        return transfers
+    
     def fetch_transfer_by_tx(self, tx_hash):
         try:
             receipt = self.web3_client.eth.get_transaction_receipt(tx_hash)
         except Exception as e:
             logging.exception(f"Error fetching {tx_hash}, Error: {e}")
-            return
+            return []
 
-        transfers = []
-        for log in receipt["logs"]:
-            if log['topics'] and log["topics"][0].hex() == self.TRANSFER_TOPIC:
-                erc20_abi = [
-                                {
-                                    "name": "decimals",
-                                    "outputs": [{"type": "uint8"}],
-                                    "inputs": [],
-                                    "stateMutability": "view",
-                                    "type": "function",
-                                }
-                            ]
-                raw_value = Web3.to_int(log["data"])
-                token = self.web3_client.eth.contract(address=log["address"], abi=erc20_abi)
-                decimals = token.functions.decimals().call()
-
-                transfers.append({
-                    "token": log["address"],
-                    "from": "0x" + log["topics"][1].hex()[-40:],
-                    "to": "0x" + log["topics"][2].hex()[-40:],
-                    "value": raw_value / (10 ** decimals)
-                })
-        return transfers
+        return self.extract_transfers_from_receipt(receipt)
 
     def fetch_range(self, start: int, end: int) -> List[Transaction]:
         pass
