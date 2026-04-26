@@ -53,8 +53,6 @@ def parse_args():
 
     block_parser = arbitrage_subparsers.add_parser("block", help="Fetch by block number")
     block_parser.add_argument("id", type=int, help="Block number")
-    block_parser.add_argument("start", type=int, help="Start tx index (inclusive)")
-    block_parser.add_argument("end", type=int, help="End tx index (exclusive)")
 
     tx_parser = arbitrage_subparsers.add_parser("tx", help="Fetch by transaction hash")
     tx_parser.add_argument("id", type=str, help="Transaction hash")

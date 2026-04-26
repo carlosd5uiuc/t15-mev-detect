@@ -12,6 +12,8 @@ from mev_types.arbitrage import calculate_arbitrage
 from mev_types.frontrun import detect_front_running
 from mev_types.sandwich import detect_sandwich_attacks
 
+from token_decimals_cache import load_token_decimals_cache, save_token_decimals_cache
+
 load_dotenv()
 rpc_url_key = os.getenv("RPC_URL_KEY")
 
@@ -54,7 +56,41 @@ class BlockchainFetcher:
         self.web3_client = Web3(Web3.HTTPProvider(f"https://mainnet.infura.io/v3/{rpc_url_key}"))
         self.web3_client.is_connected()
         self.TRANSFER_TOPIC = self.web3_client.keccak(text="Transfer(address,address,uint256)").hex()
-        self.token_decimals_cache = {}
+        self.token_decimals_cache = load_token_decimals_cache()
+
+    def get_token_decimals(self, token_address):
+        cache_key = token_address.lower()
+
+        if cache_key in self.token_decimals_cache:
+            return self.token_decimals_cache[cache_key]
+
+        checksum_address = Web3.to_checksum_address(token_address)
+
+        erc20_abi = [
+            {
+                "name": "decimals",
+                "outputs": [{"type": "uint8"}],
+                "inputs": [],
+                "stateMutability": "view",
+                "type": "function",
+            }
+        ]
+
+        token = self.web3_client.eth.contract(
+            address=checksum_address,
+            abi=erc20_abi,
+        )
+
+        try:
+            decimals = token.functions.decimals().call()
+        except Exception as e:
+            logging.warning(f"Could not fetch decimals for token {checksum_address}: {e}")
+            decimals = 18
+
+        self.token_decimals_cache[cache_key] = decimals
+        save_token_decimals_cache(self.token_decimals_cache)
+
+        return decimals
 
     def fetch_transfers_by_block_from_cache(self, block_number):
         from receipt_cache import get_block_receipts
@@ -159,44 +195,8 @@ class BlockchainFetcher:
                 else:
                     raw_value = Web3.to_int(data)
 
-                erc20_abi = [
-                    {
-                        "name": "decimals",
-                        "outputs": [{"type": "uint8"}],
-                        "inputs": [],
-                        "stateMutability": "view",
-                        "type": "function",
-                    }
-                ]
-
-                # token = self.web3_client.eth.contract(
-                #     address=log["address"],
-                #     abi=erc20_abi,
-                # )
-
-                # try:
-                #     decimals = token.functions.decimals().call()
-                # except Exception as e:
-                #     logging.warning(f"Could not fetch decimals for token {log['address']}: {e}")
-                #     decimals = 18
-
-                token_address = log["address"]
-
-                if token_address in self.token_decimals_cache:
-                    decimals = self.token_decimals_cache[token_address]
-                else:
-                    token = self.web3_client.eth.contract(
-                        address=token_address,
-                        abi=erc20_abi,
-                    )
-
-                    try:
-                        decimals = token.functions.decimals().call()
-                    except Exception as e:
-                        logging.warning(f"Could not fetch decimals for token {token_address}: {e}")
-                        decimals = 18
-
-                    self.token_decimals_cache[token_address] = decimals
+                token_address = log["address"].lower()
+                decimals = self.get_token_decimals(token_address)
 
                 topic1 = topics[1]
                 topic2 = topics[2]
