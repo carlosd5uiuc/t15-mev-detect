@@ -1,0 +1,42 @@
+{
+  "0x00e2b6d170740c15bf9fb01d0b6e77c0d4510e32": {
+    "address": "0x00e2b6d170740c15bf9fb01d0b6e77c0d4510e32",
+    "symbol": "DOG"
+  },
+  "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c": {
+    "address": "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c",
+    "symbol": "BNT"
+  },
+  "0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b": {
+    "address": "0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b",
+    "symbol": "CVX"
+  },
+  "0x4ebdf703948ddcea3b11f675b4d1fba9d2414a14": {
+    "address": "0x4ebdf703948ddcea3b11f675b4d1fba9d2414a14",
+    "symbol": "crvUSDETHCRV"
+  },
+  "0x56072c95faa701256059aa122697b133aded9279": {
+    "address": "0x56072c95faa701256059aa122697b133aded9279",
+    "symbol": "SKY"
+  },
+  "0x85f17cf997934a597031b2e18a9ab6ebd4b9f6a4": {
+    "address": "0x85f17cf997934a597031b2e18a9ab6ebd4b9f6a4",
+    "symbol": "NEAR"
+  },
+  "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": {
+    "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    "symbol": "USDC"
+  },
+  "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2": {
+    "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    "symbol": "WETH"
+  },
+  "0xdac17f958d2ee523a2206206994597c13d831ec7": {
+    "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    "symbol": "USDT"
+  },
+  "0xf3e4872e6a4cf365888d93b6146a2baa7348f1a4": {
+    "address": "0xf3e4872e6a4cf365888d93b6146a2baa7348f1a4",
+    "symbol": "SLVon"
+  }
+}

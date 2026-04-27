@@ -13,6 +13,7 @@ from mev_types.frontrun import detect_front_running
 from mev_types.sandwich import detect_sandwich_attacks
 
 from token_decimals_cache import load_token_decimals_cache, save_token_decimals_cache
+from token_metadata_cache import load_token_metadata_cache, save_token_metadata_cache
 
 load_dotenv()
 rpc_url_key = os.getenv("RPC_URL_KEY")
@@ -57,6 +58,45 @@ class BlockchainFetcher:
         self.web3_client.is_connected()
         self.TRANSFER_TOPIC = self.web3_client.keccak(text="Transfer(address,address,uint256)").hex()
         self.token_decimals_cache = load_token_decimals_cache()
+        self.token_metadata_cache = load_token_metadata_cache()
+
+    def get_token_symbol(self, token_address):
+        cache_key = token_address.lower()
+
+        if cache_key in self.token_metadata_cache:
+            return self.token_metadata_cache[cache_key].get("symbol", cache_key)
+
+        checksum_address = Web3.to_checksum_address(token_address)
+
+        erc20_abi = [
+            {
+                "name": "symbol",
+                "outputs": [{"type": "string"}],
+                "inputs": [],
+                "stateMutability": "view",
+                "type": "function",
+            }
+        ]
+
+        token = self.web3_client.eth.contract(
+            address=checksum_address,
+            abi=erc20_abi,
+        )
+
+        try:
+            symbol = token.functions.symbol().call()
+        except Exception as e:
+            logging.warning(f"Could not fetch symbol for token {checksum_address}: {e}")
+            symbol = cache_key
+
+        self.token_metadata_cache[cache_key] = {
+            "symbol": symbol,
+            "address": cache_key,
+        }
+
+        save_token_metadata_cache(self.token_metadata_cache)
+
+        return symbol
 
     def get_token_decimals(self, token_address):
         cache_key = token_address.lower()
