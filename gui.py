@@ -7,6 +7,7 @@ from mev_types.arbitrage import calculate_arbitrage
 from mev_types.frontrun import detect_front_running
 from mev_types.sandwich import detect_sandwich_attacks
 from blockchain_fetcher import BlockchainFetcher
+from receipt_cache import get_block_receipts, _cache_path
 
 
 st.set_page_config(page_title="MEV Detection Tool", layout="wide")
@@ -15,7 +16,7 @@ st.title("MEV Detection Tool")
 
 mode = st.sidebar.selectbox(
     "Input type",
-    ["Transaction Hash", "Block Range", "CSV Upload"]
+    ["Transaction Hash", "Block", "CSV Upload"]
 )
 
 if mode == "Transaction Hash":
@@ -57,31 +58,37 @@ if mode == "Transaction Hash":
             st.dataframe(pd.DataFrame(results), use_container_width=True)
 
 
-elif mode == "Block Range":
+elif mode == "Block":
     block_number = st.number_input("Block number", min_value=0, step=1)
-    start = st.number_input("Start transaction index", min_value=0, step=1)
-    end = st.number_input("End transaction index", min_value=0, step=1)
 
-    if st.button("Analyze block range"):
-        if end <= start:
-            st.error("End index must be greater than start index.")
-        else:
+    if st.button("Analyze block"):
+        with st.spinner("Analyzing block..."):
             fetcher = BlockchainFetcher()
-            txs = fetcher.fetch_block_transactions(
-                block_number=int(block_number),
-                start=int(start),
-                end=int(end),
+
+            tx_transfers = fetcher.fetch_transfers_by_block_from_cache(
+                block_number=int(block_number)
             )
 
             all_results = []
 
-            for tx in txs:
-                results = run_detection(mev_type, tx)
-                if results:
-                    all_results.extend(results)
+            for tx_hash, transfers in tx_transfers.items():
+                results = run_detection(mev_type, transfers)
 
-            st.subheader("Results")
+                if results:
+                    for item in results:
+                        all_results.append({
+                            "tx": tx_hash,
+                            "address": item["address"],
+                            "token": item["token"],
+                            "value": item["value"],
+                        })
+
+        st.subheader("Results")
+
+        if all_results:
             st.dataframe(pd.DataFrame(all_results), use_container_width=True)
+        else:
+            st.warning("No MEV pattern detected.")
 
 
 elif mode == "CSV Upload":

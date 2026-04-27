@@ -111,8 +111,8 @@ def get_block_receipts(block_number: int) -> Dict[str, Any]:
 
         receipt = _fetch_receipt_with_retry(fetcher, tx_hash)
         time.sleep(0.15)
-        minimized = _minimize_receipt(receipt)
 
+        minimized = _minimize_receipt(receipt)
         receipts[tx_hash] = minimized
 
     payload = {
