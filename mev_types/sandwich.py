@@ -1,54 +1,73 @@
+from collections import defaultdict
+
 def detect_sandwich_attacks(transactions):
-    """
-    Detect sandwich attacks from decoded transactions.
-    """
 
     swaps = []
 
+    # ----------------------------
+    # FLATTEN
+    # ----------------------------
     for tx in transactions:
-        for swap in getattr(tx, "swaps", []):
-            if not swap:
+        for s in getattr(tx, "swaps", []):
+            if not s:
                 continue
 
             swaps.append({
-                "tx_hash": swap["tx_hash"],
-                "pool": swap["pool"],
-                "direction": swap.get("direction"),
-                "price": swap.get("price"),
+                "tx_hash": s["tx_hash"],
+                "pool": s["pool"],
+                "trader": s.get("trader"),
+                "price": s.get("price"),
+                "direction": s.get("direction"),
                 "block_index": getattr(tx, "block_index", None),
             })
 
-    # sort execution order
-    swaps.sort(key=lambda x: x["block_index"])
+    swaps.sort(key=lambda x: x["block_index"] or 999999)
 
-    pool_map = {}
+    pool_map = defaultdict(list)
 
     for s in swaps:
-        pool_map.setdefault(s["pool"], []).append(s)
+        pool_map[s["pool"]].append(s)
 
     results = []
 
+    # ----------------------------
+    # REAL SANDWICH RULE
+    # ----------------------------
     for pool, s_list in pool_map.items():
 
         for i in range(len(s_list) - 2):
 
-            a, b, c = s_list[i], s_list[i+1], s_list[i+2]
+            first = s_list[i]
+            mid = s_list[i + 1]
+            last = s_list[i + 2]
 
-            if None in (a["price"], b["price"], c["price"]):
+            # must have valid traders
+            if not (first["trader"] and last["trader"]):
                 continue
 
-            # -------------------------
-            # PRICE IMPACT CHECK
-            # -------------------------
-            price_spike = a["price"] < b["price"]
-            price_revert = c["price"] < b["price"]
+            # SAME BOT MUST FRONT AND BACK RUN
+            if first["trader"] != last["trader"]:
+                continue
 
-            if price_spike and price_revert:
+            # victim must be different
+            if mid["trader"] == first["trader"]:
+                continue
+
+            # price logic (simple validation)
+            if None in (first["price"], mid["price"], last["price"]):
+                continue
+
+            price_up = mid["price"] > first["price"]
+            price_down = last["price"] < mid["price"]
+
+            if price_up and price_down:
                 results.append({
                     "pool": pool,
-                    "bot_buy": a,
-                    "victim": b,
-                    "bot_sell": c
+                    "attacker": first["trader"],
+                    "victim": mid["trader"],
+                    "bot_buy": first,
+                    "victim_swap": mid,
+                    "bot_sell": last,
                 })
 
     return results

@@ -424,13 +424,48 @@ class BlockchainFetcher:
             if not isinstance(topic0, str):
                 topic0 = topic0.hex()
 
-            if topic0 != SWAP_TOPIC:
+            if topic0 != SWAP_TOPIC: #skip non-swap logs
                 continue
 
+            #normalize swap
             intent = self.normalize_swap_intent(log)
 
-            if intent:
-                swaps.append(intent)
+            if not intent:
+                continue
+
+            #try exact swap decoding (with real tokens, amounts, and price)
+            trader = None
+
+            try:
+                if len(topics) > 1:
+
+                    topic1 = topics[1]
+
+                    if not isinstance(topic1, str):
+                        topic1 = topic1.hex()
+
+                    trader = "0x" + topic1[-40:]
+
+            except Exception:
+                trader = None
+
+            intent["trader"] = trader
+
+            #compute prices
+            amount_in = intent.get("amount_in")
+            amount_out = intent.get("amount_out")
+
+            price = None
+
+            try:
+                if amount_in and amount_out:
+                    price = amount_out / amount_in
+            except Exception:
+                price = None
+
+            intent["price"] = price
+
+            swaps.append(intent)
 
         return swaps
     
