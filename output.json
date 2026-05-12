@@ -1,0 +1,1252 @@
+[
+  {
+    "tx_hash": "0xd5b0c82326493690e05c3ac4be63e8bb7763f1a99fbea6db293ec317c8ce5595",
+    "token_pair": "USDC-USDT",
+    "usd_value": 77657.48298152794
+  },
+  {
+    "tx_hash": "0xd5b0c82326493690e05c3ac4be63e8bb7763f1a99fbea6db293ec317c8ce5595",
+    "token_pair": "USDC-WETH",
+    "usd_value": 76712.2433508998
+  },
+  {
+    "tx_hash": "0xd5b0c82326493690e05c3ac4be63e8bb7763f1a99fbea6db293ec317c8ce5595",
+    "token_pair": "USDT-WETH",
+    "usd_value": 77622.70516589413
+  },
+  {
+    "tx_hash": "0x72a5b5c7fda1067d49ff57cb3d5b75f41b5d01c968721fd203859a021c431918",
+    "token_pair": "USDC-WETH",
+    "usd_value": 979.498107054312
+  },
+  {
+    "tx_hash": "0x72a5b5c7fda1067d49ff57cb3d5b75f41b5d01c968721fd203859a021c431918",
+    "token_pair": "UST-WETH",
+    "usd_value": 1072.637275351977
+  },
+  {
+    "tx_hash": "0x72a5b5c7fda1067d49ff57cb3d5b75f41b5d01c968721fd203859a021c431918",
+    "token_pair": "USDC-UST",
+    "usd_value": 979.498107054312
+  },
+  {
+    "tx_hash": "0x0856c4cb5a4830ee3fbf95066ac83fb3c1c2734c7638eadd2c993daa6139e096",
+    "token_pair": "FODL-WETH",
+    "usd_value": 4780.826297246158
+  },
+  {
+    "tx_hash": "0x412d80a33fd99c57258f6e198daa117d7fba8572d5dbef662a62276c04d2c7d1",
+    "token_pair": "DAI-USDC",
+    "usd_value": 187557.20171217094
+  },
+  {
+    "tx_hash": "0x412d80a33fd99c57258f6e198daa117d7fba8572d5dbef662a62276c04d2c7d1",
+    "token_pair": "USDC-WETH",
+    "usd_value": 187270.17348896392
+  },
+  {
+    "tx_hash": "0x412d80a33fd99c57258f6e198daa117d7fba8572d5dbef662a62276c04d2c7d1",
+    "token_pair": "USDT-WETH",
+    "usd_value": 186624.1392167048
+  },
+  {
+    "tx_hash": "0x412d80a33fd99c57258f6e198daa117d7fba8572d5dbef662a62276c04d2c7d1",
+    "token_pair": "DAI-USDT",
+    "usd_value": 187300.9135609721
+  },
+  {
+    "tx_hash": "0x0856c4cb5a4830ee3fbf95066ac83fb3c1c2734c7638eadd2c993daa6139e096",
+    "token_pair": "BNT-FODL",
+    "usd_value": 4820.951259645143
+  },
+  {
+    "tx_hash": "0x0856c4cb5a4830ee3fbf95066ac83fb3c1c2734c7638eadd2c993daa6139e096",
+    "token_pair": "UNI-WETH",
+    "usd_value": 4903.754986221333
+  },
+  {
+    "tx_hash": "0x0856c4cb5a4830ee3fbf95066ac83fb3c1c2734c7638eadd2c993daa6139e096",
+    "token_pair": "BNT-UNI",
+    "usd_value": 4888.486523605816
+  },
+  {
+    "tx_hash": "0x84d151746469047e6a460cd5cfacd8c11273c6d59d19a22014264e52eb8d5245",
+    "token_pair": "DAI-UST",
+    "usd_value": 15278.768349699229
+  },
+  {
+    "tx_hash": "0x84d151746469047e6a460cd5cfacd8c11273c6d59d19a22014264e52eb8d5245",
+    "token_pair": "DAI-MIM",
+    "usd_value": 14751.738704499654
+  },
+  {
+    "tx_hash": "0x84d151746469047e6a460cd5cfacd8c11273c6d59d19a22014264e52eb8d5245",
+    "token_pair": "MIM-UST",
+    "usd_value": 14805.77190450534
+  },
+  {
+    "tx_hash": "0xc9f1c02872f5efff8cab829b2964bef5afa4c9e532c61910df39e7406c21a8d4",
+    "token_pair": "FEI-USDC",
+    "usd_value": 84596.62720747793
+  },
+  {
+    "tx_hash": "0x2079cbe54dcfc3e3c8b8a9520a3c25db77536902f964fc236bc26721c73b6511",
+    "token_pair": "HEX-USDC",
+    "usd_value": 34492.018590226646
+  },
+  {
+    "tx_hash": "0x2079cbe54dcfc3e3c8b8a9520a3c25db77536902f964fc236bc26721c73b6511",
+    "token_pair": "HEX-WETH",
+    "usd_value": 34388.11604710301
+  },
+  {
+    "tx_hash": "0xd1f02e33eedb085ebada65f187aae15ae563eac8c6194916c7c15b8bd81247bf",
+    "token_pair": "DAI-MANA",
+    "usd_value": 7322.455341867348
+  },
+  {
+    "tx_hash": "0xd1f02e33eedb085ebada65f187aae15ae563eac8c6194916c7c15b8bd81247bf",
+    "token_pair": "MANA-WETH",
+    "usd_value": 7338.249309897144
+  },
+  {
+    "tx_hash": "0xd1f02e33eedb085ebada65f187aae15ae563eac8c6194916c7c15b8bd81247bf",
+    "token_pair": "DAI-WETH",
+    "usd_value": 7322.455341867348
+  },
+  {
+    "tx_hash": "0xc9f1c02872f5efff8cab829b2964bef5afa4c9e532c61910df39e7406c21a8d4",
+    "token_pair": "USDC-WETH",
+    "usd_value": 84597.47318427173
+  },
+  {
+    "tx_hash": "0x2079cbe54dcfc3e3c8b8a9520a3c25db77536902f964fc236bc26721c73b6511",
+    "token_pair": "USDC-WETH",
+    "usd_value": 34710.47539249531
+  },
+  {
+    "tx_hash": "0xc9f1c02872f5efff8cab829b2964bef5afa4c9e532c61910df39e7406c21a8d4",
+    "token_pair": "FEI-WETH",
+    "usd_value": 84027.15001355698
+  },
+  {
+    "tx_hash": "0x21820d8bd563c1eb0ca8efa1a169c38598959737e42b5377be023d6d8ace8535",
+    "token_pair": "USDC-USDT",
+    "usd_value": 443715.48907976097
+  },
+  {
+    "tx_hash": "0x21820d8bd563c1eb0ca8efa1a169c38598959737e42b5377be023d6d8ace8535",
+    "token_pair": "USDT-WETH",
+    "usd_value": 450319.6565079349
+  },
+  {
+    "tx_hash": "0x21820d8bd563c1eb0ca8efa1a169c38598959737e42b5377be023d6d8ace8535",
+    "token_pair": "USDC-WETH",
+    "usd_value": 453821.1848216814
+  },
+  {
+    "tx_hash": "0x359ef48489a7b958c8104943663c0ad87aafc8fd9acce9683c8af120fb8bd248",
+    "token_pair": "SAND-WETH",
+    "usd_value": 2508.1125000000006
+  },
+  {
+    "tx_hash": "0x359ef48489a7b958c8104943663c0ad87aafc8fd9acce9683c8af120fb8bd248",
+    "token_pair": "SAND-WETH",
+    "usd_value": 2556.6274945125188
+  },
+  {
+    "tx_hash": "0x5500de0678184990a8434de3bb67ce25282ab4e05fe59e79a7cd420b591a15c4",
+    "token_pair": "WETH-WRLD",
+    "usd_value": 2762.958548185038
+  },
+  {
+    "tx_hash": "0x359ef48489a7b958c8104943663c0ad87aafc8fd9acce9683c8af120fb8bd248",
+    "token_pair": "OHM-WETH",
+    "usd_value": 9659.694430625223
+  },
+  {
+    "tx_hash": "0xbedd7466d95e0d578a9021122a9e5387fbe014bc9543c15d6d2b0bb0b384a65b",
+    "token_pair": "WBTC-XSGD",
+    "usd_value": 11201.0023756924
+  },
+  {
+    "tx_hash": "0x359ef48489a7b958c8104943663c0ad87aafc8fd9acce9683c8af120fb8bd248",
+    "token_pair": "BTRFLY-WETH",
+    "usd_value": 9510.762599999998
+  },
+  {
+    "tx_hash": "0xbedd7466d95e0d578a9021122a9e5387fbe014bc9543c15d6d2b0bb0b384a65b",
+    "token_pair": "USDC-WETH",
+    "usd_value": 11211.561727084327
+  },
+  {
+    "tx_hash": "0x2b79123b5fdfad176ecd9cacee194efac2a1b7f1f1cbe52013c8db4074980a35",
+    "token_pair": "BNT-WETH",
+    "usd_value": 3962.936698486366
+  },
+  {
+    "tx_hash": "0x5500de0678184990a8434de3bb67ce25282ab4e05fe59e79a7cd420b591a15c4",
+    "token_pair": "LUNA-WETH",
+    "usd_value": 213.53009801704417
+  },
+  {
+    "tx_hash": "0x2b79123b5fdfad176ecd9cacee194efac2a1b7f1f1cbe52013c8db4074980a35",
+    "token_pair": "MTA-WETH",
+    "usd_value": 3829.47846354
+  },
+  {
+    "tx_hash": "0x359ef48489a7b958c8104943663c0ad87aafc8fd9acce9683c8af120fb8bd248",
+    "token_pair": "BTRFLY-OHM",
+    "usd_value": 9500.96113753426
+  },
+  {
+    "tx_hash": "0x5500de0678184990a8434de3bb67ce25282ab4e05fe59e79a7cd420b591a15c4",
+    "token_pair": "LUNA-WETH",
+    "usd_value": 160.5192
+  },
+  {
+    "tx_hash": "0xbedd7466d95e0d578a9021122a9e5387fbe014bc9543c15d6d2b0bb0b384a65b",
+    "token_pair": "WBTC-WETH",
+    "usd_value": 11226.305072193667
+  },
+  {
+    "tx_hash": "0xbedd7466d95e0d578a9021122a9e5387fbe014bc9543c15d6d2b0bb0b384a65b",
+    "token_pair": "USDC-XSGD",
+    "usd_value": 11211.561727084327
+  },
+  {
+    "tx_hash": "0x2b79123b5fdfad176ecd9cacee194efac2a1b7f1f1cbe52013c8db4074980a35",
+    "token_pair": "BNT-MTA",
+    "usd_value": 3976.91084409299
+  },
+  {
+    "tx_hash": "0x5500de0678184990a8434de3bb67ce25282ab4e05fe59e79a7cd420b591a15c4",
+    "token_pair": "WETH-WRLD",
+    "usd_value": 2710.76799
+  },
+  {
+    "tx_hash": "0x0c8abc0da069df9c82fc95d81352840d0fcdd133e4b824de45050ed54f22afbe",
+    "token_pair": "USDC-USDT",
+    "usd_value": 179405.92445835096
+  },
+  {
+    "tx_hash": "0x20e3645c3d5e89379f1bb66a6280cc394d29b00c5bdf52ebb969492dcd9374bf",
+    "token_pair": "LYXe-USDC",
+    "usd_value": 6747.1248383163
+  },
+  {
+    "tx_hash": "0x20e3645c3d5e89379f1bb66a6280cc394d29b00c5bdf52ebb969492dcd9374bf",
+    "token_pair": "LYXe-WETH",
+    "usd_value": 6970.360810048315
+  },
+  {
+    "tx_hash": "0x0c8abc0da069df9c82fc95d81352840d0fcdd133e4b824de45050ed54f22afbe",
+    "token_pair": "USDC-WETH",
+    "usd_value": 179422.1862142356
+  },
+  {
+    "tx_hash": "0x0c8abc0da069df9c82fc95d81352840d0fcdd133e4b824de45050ed54f22afbe",
+    "token_pair": "USDT-WBTC",
+    "usd_value": 179552.37406896
+  },
+  {
+    "tx_hash": "0x20e3645c3d5e89379f1bb66a6280cc394d29b00c5bdf52ebb969492dcd9374bf",
+    "token_pair": "USDC-WETH",
+    "usd_value": 6937.53289509864
+  },
+  {
+    "tx_hash": "0xcc340f3a8b234fadfa1696af1123cd992f2f106efc68410b13c415eb826d5991",
+    "token_pair": "VITE-WETH",
+    "usd_value": 1971.892466696132
+  },
+  {
+    "tx_hash": "0x640d0f5cbfa83328e42ee1a00ae61830dbb6f140bb6591723dcb46c21ea7664f",
+    "token_pair": "FLX-RNG",
+    "usd_value": 3223.672953394755
+  },
+  {
+    "tx_hash": "0xcc340f3a8b234fadfa1696af1123cd992f2f106efc68410b13c415eb826d5991",
+    "token_pair": "RACA-USDT",
+    "usd_value": 1919.0174679909642
+  },
+  {
+    "tx_hash": "0x640d0f5cbfa83328e42ee1a00ae61830dbb6f140bb6591723dcb46c21ea7664f",
+    "token_pair": "FLX-WETH",
+    "usd_value": 3156.160753310081
+  },
+  {
+    "tx_hash": "0xcc340f3a8b234fadfa1696af1123cd992f2f106efc68410b13c415eb826d5991",
+    "token_pair": "RACA-WETH",
+    "usd_value": 1889.3357097629207
+  },
+  {
+    "tx_hash": "0x5f6aa3d75238dea7ad47783447ff7790227d3b1b75fc0fa672750989a7111466",
+    "token_pair": "DAI-FUN",
+    "usd_value": 21938.24068837626
+  },
+  {
+    "tx_hash": "0xcc340f3a8b234fadfa1696af1123cd992f2f106efc68410b13c415eb826d5991",
+    "token_pair": "USDT-VITE",
+    "usd_value": 1918.997754647024
+  },
+  {
+    "tx_hash": "0x5f6aa3d75238dea7ad47783447ff7790227d3b1b75fc0fa672750989a7111466",
+    "token_pair": "DAI-WETH",
+    "usd_value": 21938.24068837626
+  },
+  {
+    "tx_hash": "0x5f6aa3d75238dea7ad47783447ff7790227d3b1b75fc0fa672750989a7111466",
+    "token_pair": "FUN-WBTC",
+    "usd_value": 22062.57392304
+  },
+  {
+    "tx_hash": "0x5f6aa3d75238dea7ad47783447ff7790227d3b1b75fc0fa672750989a7111466",
+    "token_pair": "WBTC-WETH",
+    "usd_value": 22091.375370095833
+  },
+  {
+    "tx_hash": "0x640d0f5cbfa83328e42ee1a00ae61830dbb6f140bb6591723dcb46c21ea7664f",
+    "token_pair": "RNG-UNI",
+    "usd_value": 3237.640050740979
+  },
+  {
+    "tx_hash": "0x640d0f5cbfa83328e42ee1a00ae61830dbb6f140bb6591723dcb46c21ea7664f",
+    "token_pair": "UNI-WETH",
+    "usd_value": 3249.350464093055
+  },
+  {
+    "tx_hash": "0xb529e3be5942f326f534f87d851470bc9e9d99bca2cfc065cb8a0cb071199b97",
+    "token_pair": "USDT-WETH",
+    "usd_value": 38997.41480274849
+  },
+  {
+    "tx_hash": "0xb529e3be5942f326f534f87d851470bc9e9d99bca2cfc065cb8a0cb071199b97",
+    "token_pair": "UST-WETH",
+    "usd_value": 37576.08467496
+  },
+  {
+    "tx_hash": "0xb529e3be5942f326f534f87d851470bc9e9d99bca2cfc065cb8a0cb071199b97",
+    "token_pair": "USDT-UST",
+    "usd_value": 38892.759963712684
+  },
+  {
+    "tx_hash": "0x5433adfa5212d6a98bbfebb061c7f004f4712a5fabe55ce1ce1d68cebc3bd70f",
+    "token_pair": "SAITAMA-WETH",
+    "usd_value": 224.23320136942857
+  },
+  {
+    "tx_hash": "0xb51c18ad2e5632b602cfde814f14cb0b39c0fb8197ac09c6b3a7e4d1afa0367d",
+    "token_pair": "USDC-WETH",
+    "usd_value": 8104.591708225672
+  },
+  {
+    "tx_hash": "0x5433adfa5212d6a98bbfebb061c7f004f4712a5fabe55ce1ce1d68cebc3bd70f",
+    "token_pair": "DOGEFI-WETH",
+    "usd_value": 167.20595564139998
+  },
+  {
+    "tx_hash": "0xb51c18ad2e5632b602cfde814f14cb0b39c0fb8197ac09c6b3a7e4d1afa0367d",
+    "token_pair": "MIM-UST",
+    "usd_value": 8100.965730527423
+  },
+  {
+    "tx_hash": "0x2f7f0d662fadca43394e869a221c2733ca46c12a1d540b0ca7cd9ab910585a46",
+    "token_pair": "BNT-WETH",
+    "usd_value": 6890.637530083916
+  },
+  {
+    "tx_hash": "0xf7aeecd514a24d2e8de8e8aeb9854139c71c37ab2dae20349070d76584608f2b",
+    "token_pair": "USDC-UST",
+    "usd_value": 0.0
+  },
+  {
+    "tx_hash": "0x2f7f0d662fadca43394e869a221c2733ca46c12a1d540b0ca7cd9ab910585a46",
+    "token_pair": "BNT-HOT",
+    "usd_value": 6882.451137432603
+  },
+  {
+    "tx_hash": "0xf7aeecd514a24d2e8de8e8aeb9854139c71c37ab2dae20349070d76584608f2b",
+    "token_pair": "MIM-UST",
+    "usd_value": 30392.492704604203
+  },
+  {
+    "tx_hash": "0x2f7f0d662fadca43394e869a221c2733ca46c12a1d540b0ca7cd9ab910585a46",
+    "token_pair": "HOT-WETH",
+    "usd_value": 6817.4966760992
+  },
+  {
+    "tx_hash": "0xf7aeecd514a24d2e8de8e8aeb9854139c71c37ab2dae20349070d76584608f2b",
+    "token_pair": "MIM-USDC",
+    "usd_value": 30433.209696554462
+  },
+  {
+    "tx_hash": "0x2ff8a4d818cd58ad497b906b500f960d2d23240a95839168a68d6c8f8e61fedf",
+    "token_pair": "DAI-WETH",
+    "usd_value": 1580.0056770614924
+  },
+  {
+    "tx_hash": "0xb51c18ad2e5632b602cfde814f14cb0b39c0fb8197ac09c6b3a7e4d1afa0367d",
+    "token_pair": "MIM-USDC",
+    "usd_value": 8090.15700535515
+  },
+  {
+    "tx_hash": "0xb51c18ad2e5632b602cfde814f14cb0b39c0fb8197ac09c6b3a7e4d1afa0367d",
+    "token_pair": "UST-WETH",
+    "usd_value": 7633.262896674641
+  },
+  {
+    "tx_hash": "0x5789e22b594b876811208ab0d45bca91eb2e36fd0882f13ee3fbb48211081c3e",
+    "token_pair": "SAND-WETH",
+    "usd_value": 2676.8067973442026
+  },
+  {
+    "tx_hash": "0x5789e22b594b876811208ab0d45bca91eb2e36fd0882f13ee3fbb48211081c3e",
+    "token_pair": "REVV-WETH",
+    "usd_value": 2635.0080115501996
+  },
+  {
+    "tx_hash": "0x5789e22b594b876811208ab0d45bca91eb2e36fd0882f13ee3fbb48211081c3e",
+    "token_pair": "REVV-SAND",
+    "usd_value": 2711.913581031784
+  },
+  {
+    "tx_hash": "0x2ff8a4d818cd58ad497b906b500f960d2d23240a95839168a68d6c8f8e61fedf",
+    "token_pair": "DAI-SLICE",
+    "usd_value": 1580.0056770614924
+  },
+  {
+    "tx_hash": "0x2ff8a4d818cd58ad497b906b500f960d2d23240a95839168a68d6c8f8e61fedf",
+    "token_pair": "SLICE-WETH",
+    "usd_value": 1642.400252195939
+  },
+  {
+    "tx_hash": "0x5433adfa5212d6a98bbfebb061c7f004f4712a5fabe55ce1ce1d68cebc3bd70f",
+    "token_pair": "DOGEFI-SAITAMA",
+    "usd_value": 0.0
+  },
+  {
+    "tx_hash": "0x7510413253b75e2a339eaff34ff40db72c59ccec85038f3ee23345daadb42a9f",
+    "token_pair": "MIR-WETH",
+    "usd_value": 736.2304295669675
+  },
+  {
+    "tx_hash": "0x7510413253b75e2a339eaff34ff40db72c59ccec85038f3ee23345daadb42a9f",
+    "token_pair": "MIR-UST",
+    "usd_value": 757.2823937204461
+  },
+  {
+    "tx_hash": "0x7510413253b75e2a339eaff34ff40db72c59ccec85038f3ee23345daadb42a9f",
+    "token_pair": "UST-WETH",
+    "usd_value": 681.394639913
+  },
+  {
+    "tx_hash": "0xaddeb82d26c1753cf2c27db9fdead02ddee8ebc6ee3bc6ae40e68fca7460227c",
+    "token_pair": "LINK-WETH",
+    "usd_value": 41936.43130331021
+  },
+  {
+    "tx_hash": "0xec1d0afca765915dfd7c4d851145a32ffac9d13b62a9afd66cf0e7cff16250f5",
+    "token_pair": "USDC-WETH",
+    "usd_value": 93232.7966386685
+  },
+  {
+    "tx_hash": "0xaddeb82d26c1753cf2c27db9fdead02ddee8ebc6ee3bc6ae40e68fca7460227c",
+    "token_pair": "BNT-LINK",
+    "usd_value": 41835.68005987385
+  },
+  {
+    "tx_hash": "0xec1d0afca765915dfd7c4d851145a32ffac9d13b62a9afd66cf0e7cff16250f5",
+    "token_pair": "USDC-WBTC",
+    "usd_value": 92718.57213608184
+  },
+  {
+    "tx_hash": "0xaddeb82d26c1753cf2c27db9fdead02ddee8ebc6ee3bc6ae40e68fca7460227c",
+    "token_pair": "BNT-WETH",
+    "usd_value": 41804.46795552093
+  },
+  {
+    "tx_hash": "0xec1d0afca765915dfd7c4d851145a32ffac9d13b62a9afd66cf0e7cff16250f5",
+    "token_pair": "WBTC-WETH",
+    "usd_value": 93169.01720592
+  },
+  {
+    "tx_hash": "0x29fc1dc10d3a68b5e006c38ad42a7e1acd272932feb46d22af38346da72e3c81",
+    "token_pair": "SAND-WETH",
+    "usd_value": 2942.856521691491
+  },
+  {
+    "tx_hash": "0x29fc1dc10d3a68b5e006c38ad42a7e1acd272932feb46d22af38346da72e3c81",
+    "token_pair": "APE-WETH",
+    "usd_value": 2850.862578959847
+  },
+  {
+    "tx_hash": "0x1e532021c73390820b9c51800fa9eb320f439a3ef81c7804000f3c4fcf16254e",
+    "token_pair": "DAI-DOLA",
+    "usd_value": 3660.1177048846807
+  },
+  {
+    "tx_hash": "0x1e532021c73390820b9c51800fa9eb320f439a3ef81c7804000f3c4fcf16254e",
+    "token_pair": "DAI-WETH",
+    "usd_value": 3660.1177048846807
+  },
+  {
+    "tx_hash": "0x29fc1dc10d3a68b5e006c38ad42a7e1acd272932feb46d22af38346da72e3c81",
+    "token_pair": "APE-PRIMATE",
+    "usd_value": 2900.2576976175255
+  },
+  {
+    "tx_hash": "0x29fc1dc10d3a68b5e006c38ad42a7e1acd272932feb46d22af38346da72e3c81",
+    "token_pair": "PRIMATE-REVV",
+    "usd_value": 2871.998333494174
+  },
+  {
+    "tx_hash": "0x29fc1dc10d3a68b5e006c38ad42a7e1acd272932feb46d22af38346da72e3c81",
+    "token_pair": "REVV-SAND",
+    "usd_value": 2989.814725429923
+  },
+  {
+    "tx_hash": "0x1e532021c73390820b9c51800fa9eb320f439a3ef81c7804000f3c4fcf16254e",
+    "token_pair": "INV-WETH",
+    "usd_value": 3747.9506556836463
+  },
+  {
+    "tx_hash": "0x1e532021c73390820b9c51800fa9eb320f439a3ef81c7804000f3c4fcf16254e",
+    "token_pair": "DOLA-INV",
+    "usd_value": 3927.029030462219
+  },
+  {
+    "tx_hash": "0xca0add4167f40a35e32d786a9a826ca032dacbd7047c5fbb50fd5ba4bb025e9a",
+    "token_pair": "USDC-WETH",
+    "usd_value": 1574.0640486231118
+  },
+  {
+    "tx_hash": "0xca0add4167f40a35e32d786a9a826ca032dacbd7047c5fbb50fd5ba4bb025e9a",
+    "token_pair": "RAI-WETH",
+    "usd_value": 1087.8427644107694
+  },
+  {
+    "tx_hash": "0xca0add4167f40a35e32d786a9a826ca032dacbd7047c5fbb50fd5ba4bb025e9a",
+    "token_pair": "VNL-WETH",
+    "usd_value": 1637.1058189502517
+  },
+  {
+    "tx_hash": "0xca0add4167f40a35e32d786a9a826ca032dacbd7047c5fbb50fd5ba4bb025e9a",
+    "token_pair": "LUSD-WETH",
+    "usd_value": 756.115208406374
+  },
+  {
+    "tx_hash": "0xca0add4167f40a35e32d786a9a826ca032dacbd7047c5fbb50fd5ba4bb025e9a",
+    "token_pair": "VSP-WETH",
+    "usd_value": 1655.719872017225
+  },
+  {
+    "tx_hash": "0xca0add4167f40a35e32d786a9a826ca032dacbd7047c5fbb50fd5ba4bb025e9a",
+    "token_pair": "USDC-VNL",
+    "usd_value": 1574.0640486231118
+  },
+  {
+    "tx_hash": "0xca0add4167f40a35e32d786a9a826ca032dacbd7047c5fbb50fd5ba4bb025e9a",
+    "token_pair": "FRAX-LUSD",
+    "usd_value": 716.0277790459512
+  },
+  {
+    "tx_hash": "0xca0add4167f40a35e32d786a9a826ca032dacbd7047c5fbb50fd5ba4bb025e9a",
+    "token_pair": "FRAX-WETH",
+    "usd_value": 708.9146999999999
+  },
+  {
+    "tx_hash": "0xca0add4167f40a35e32d786a9a826ca032dacbd7047c5fbb50fd5ba4bb025e9a",
+    "token_pair": "RAI-WETH",
+    "usd_value": 1052.2637
+  },
+  {
+    "tx_hash": "0xca0add4167f40a35e32d786a9a826ca032dacbd7047c5fbb50fd5ba4bb025e9a",
+    "token_pair": "VSP-WETH",
+    "usd_value": 1617.7797
+  },
+  {
+    "tx_hash": "0x61cfda3696c307bedd723fd25e614e6aa94ede5c80501cef7502ec1c03f413b2",
+    "token_pair": "USDC-WETH",
+    "usd_value": 23331.558993489933
+  },
+  {
+    "tx_hash": "0x4b3252c32b5a77dc602c938986c99ddff0824b62e48967317d7040c66bafdc15",
+    "token_pair": "USDC-UST",
+    "usd_value": 0.0
+  },
+  {
+    "tx_hash": "0x61cfda3696c307bedd723fd25e614e6aa94ede5c80501cef7502ec1c03f413b2",
+    "token_pair": "FRAX-SUSHI",
+    "usd_value": 23544.74721855161
+  },
+  {
+    "tx_hash": "0x4b3252c32b5a77dc602c938986c99ddff0824b62e48967317d7040c66bafdc15",
+    "token_pair": "MIM-UST",
+    "usd_value": 12888.651878778963
+  },
+  {
+    "tx_hash": "0x4b3252c32b5a77dc602c938986c99ddff0824b62e48967317d7040c66bafdc15",
+    "token_pair": "MIM-USDC",
+    "usd_value": 12904.206652453426
+  },
+  {
+    "tx_hash": "0x61cfda3696c307bedd723fd25e614e6aa94ede5c80501cef7502ec1c03f413b2",
+    "token_pair": "SUSHI-WETH",
+    "usd_value": 23459.4585825999
+  },
+  {
+    "tx_hash": "0x61cfda3696c307bedd723fd25e614e6aa94ede5c80501cef7502ec1c03f413b2",
+    "token_pair": "FRAX-USDC",
+    "usd_value": 23331.325678741618
+  },
+  {
+    "tx_hash": "0x5239c6155a8e2ee1e9e58c279375c4134cb8cadbd41c8591004562bf7d366a25",
+    "token_pair": "DAI-LUSD",
+    "usd_value": 3839.419522672461
+  },
+  {
+    "tx_hash": "0x5239c6155a8e2ee1e9e58c279375c4134cb8cadbd41c8591004562bf7d366a25",
+    "token_pair": "DAI-WETH",
+    "usd_value": 3839.4233621271037
+  },
+  {
+    "tx_hash": "0x5239c6155a8e2ee1e9e58c279375c4134cb8cadbd41c8591004562bf7d366a25",
+    "token_pair": "RPL-WETH",
+    "usd_value": 3906.8236204780183
+  },
+  {
+    "tx_hash": "0x1521f81e7a96902312b98e57525f1a8ee4bd01161fe013f6a0b3dfb44cd15ea0",
+    "token_pair": "USDC-UST",
+    "usd_value": 26447.727945990722
+  },
+  {
+    "tx_hash": "0x1521f81e7a96902312b98e57525f1a8ee4bd01161fe013f6a0b3dfb44cd15ea0",
+    "token_pair": "MIM-UST",
+    "usd_value": 25153.367896170264
+  },
+  {
+    "tx_hash": "0x1521f81e7a96902312b98e57525f1a8ee4bd01161fe013f6a0b3dfb44cd15ea0",
+    "token_pair": "MIM-USDC",
+    "usd_value": 24764.440660336204
+  },
+  {
+    "tx_hash": "0xa9a3b9671fbf9c715b41b9a9b7da04caac1eece09bf28602cf491bb532e7a542",
+    "token_pair": "WBTC-WETH",
+    "usd_value": 61151.697049742404
+  },
+  {
+    "tx_hash": "0xa9a3b9671fbf9c715b41b9a9b7da04caac1eece09bf28602cf491bb532e7a542",
+    "token_pair": "DAI-WETH",
+    "usd_value": 61435.28118589981
+  },
+  {
+    "tx_hash": "0xa9a3b9671fbf9c715b41b9a9b7da04caac1eece09bf28602cf491bb532e7a542",
+    "token_pair": "DAI-USDT",
+    "usd_value": 61362.66347423185
+  },
+  {
+    "tx_hash": "0xa9a3b9671fbf9c715b41b9a9b7da04caac1eece09bf28602cf491bb532e7a542",
+    "token_pair": "USDT-WBTC",
+    "usd_value": 61189.10774675379
+  },
+  {
+    "tx_hash": "0xb5bde2430360111aea9c6c0638af51e28be6ab5c6306ec3403f3f6f0a1d00be6",
+    "token_pair": "USDC-WETH",
+    "usd_value": 5407.570534490712
+  },
+  {
+    "tx_hash": "0x61afd14eaa7d78a69ccc225ddccadeac1121f0d1508e0151dc11128eae25d021",
+    "token_pair": "USDC-WETH",
+    "usd_value": 1506.718627437276
+  },
+  {
+    "tx_hash": "0xb5bde2430360111aea9c6c0638af51e28be6ab5c6306ec3403f3f6f0a1d00be6",
+    "token_pair": "AMPL-USDC",
+    "usd_value": 5391.941310858708
+  },
+  {
+    "tx_hash": "0x61afd14eaa7d78a69ccc225ddccadeac1121f0d1508e0151dc11128eae25d021",
+    "token_pair": "UDO-USDC",
+    "usd_value": 1506.718627437276
+  },
+  {
+    "tx_hash": "0xb5bde2430360111aea9c6c0638af51e28be6ab5c6306ec3403f3f6f0a1d00be6",
+    "token_pair": "AMPL-WETH",
+    "usd_value": 5449.588456250212
+  },
+  {
+    "tx_hash": "0x61afd14eaa7d78a69ccc225ddccadeac1121f0d1508e0151dc11128eae25d021",
+    "token_pair": "UDO-WETH",
+    "usd_value": 1553.6309107580225
+  },
+  {
+    "tx_hash": "0xdc7836887833f34dfc6fd1b5fda86fabacbce41420a1df2b04be1fc7ea63830c",
+    "token_pair": "LEASH-SHIB",
+    "usd_value": 10025.671420352177
+  },
+  {
+    "tx_hash": "0xdc7836887833f34dfc6fd1b5fda86fabacbce41420a1df2b04be1fc7ea63830c",
+    "token_pair": "SHIB-WETH",
+    "usd_value": 9949.380350863714
+  },
+  {
+    "tx_hash": "0xdc7836887833f34dfc6fd1b5fda86fabacbce41420a1df2b04be1fc7ea63830c",
+    "token_pair": "LEASH-WETH",
+    "usd_value": 9841.399274928566
+  },
+  {
+    "tx_hash": "0x55e820085df7540ebe02182c6ea08043b269e801e4a81e1f63b09aae72eada4b",
+    "token_pair": "QNT-WETH",
+    "usd_value": 5053.75211327
+  },
+  {
+    "tx_hash": "0x55e820085df7540ebe02182c6ea08043b269e801e4a81e1f63b09aae72eada4b",
+    "token_pair": "BNT-QNT",
+    "usd_value": 5145.534138166323
+  },
+  {
+    "tx_hash": "0x55e820085df7540ebe02182c6ea08043b269e801e4a81e1f63b09aae72eada4b",
+    "token_pair": "BNT-WETH",
+    "usd_value": 5133.732774423818
+  },
+  {
+    "tx_hash": "0xb7797c46b1853142f554d06603afd35e1214937c9a82ca8592510a0c08e7c6e3",
+    "token_pair": "SHIB-WETH",
+    "usd_value": 9293.839398100577
+  },
+  {
+    "tx_hash": "0xb7797c46b1853142f554d06603afd35e1214937c9a82ca8592510a0c08e7c6e3",
+    "token_pair": "BONE-SHIB",
+    "usd_value": 9377.929567900028
+  },
+  {
+    "tx_hash": "0xb7797c46b1853142f554d06603afd35e1214937c9a82ca8592510a0c08e7c6e3",
+    "token_pair": "BONE-WETH",
+    "usd_value": 9233.069813243594
+  },
+  {
+    "tx_hash": "0xec9eef01da9f0ff3f895d9d02bf9741682a118ef219954bc70f9787de3c6288f",
+    "token_pair": "FRAX-USDC",
+    "usd_value": 159133.20211994046
+  },
+  {
+    "tx_hash": "0xec9eef01da9f0ff3f895d9d02bf9741682a118ef219954bc70f9787de3c6288f",
+    "token_pair": "USDT-WETH",
+    "usd_value": 158195.22941225462
+  },
+  {
+    "tx_hash": "0xec9eef01da9f0ff3f895d9d02bf9741682a118ef219954bc70f9787de3c6288f",
+    "token_pair": "USDC-WETH",
+    "usd_value": 159246.8275086551
+  },
+  {
+    "tx_hash": "0xec9eef01da9f0ff3f895d9d02bf9741682a118ef219954bc70f9787de3c6288f",
+    "token_pair": "FRAX-USDT",
+    "usd_value": 159050.4838285758
+  },
+  {
+    "tx_hash": "0xc169dc5e03833e558bd02eb99592f159404907f9b5dd25d9e60bd55d268d4f70",
+    "token_pair": "USDC-WETH",
+    "usd_value": 56804.59371322202
+  },
+  {
+    "tx_hash": "0x14c296888a00c322a8357982d034dcb898e59d8913ee92b5d8bf0bab3988c066",
+    "token_pair": "EURA-USDC",
+    "usd_value": 37726.02903116909
+  },
+  {
+    "tx_hash": "0xc169dc5e03833e558bd02eb99592f159404907f9b5dd25d9e60bd55d268d4f70",
+    "token_pair": "USDP-WETH",
+    "usd_value": 56547.802519560275
+  },
+  {
+    "tx_hash": "0x14c296888a00c322a8357982d034dcb898e59d8913ee92b5d8bf0bab3988c066",
+    "token_pair": "USDC-WETH",
+    "usd_value": 37726.02903116909
+  },
+  {
+    "tx_hash": "0xc169dc5e03833e558bd02eb99592f159404907f9b5dd25d9e60bd55d268d4f70",
+    "token_pair": "USDC-USDP",
+    "usd_value": 56804.59371322202
+  },
+  {
+    "tx_hash": "0x14c296888a00c322a8357982d034dcb898e59d8913ee92b5d8bf0bab3988c066",
+    "token_pair": "EURA-WETH",
+    "usd_value": 37580.0416058523
+  },
+  {
+    "tx_hash": "0xdae2cd97e97feaca4707fc805d95c697a47b8bb9a04ffc7d74951b000a5893d0",
+    "token_pair": "FXS-WETH",
+    "usd_value": 30269.338934617077
+  },
+  {
+    "tx_hash": "0xdae2cd97e97feaca4707fc805d95c697a47b8bb9a04ffc7d74951b000a5893d0",
+    "token_pair": "USDC-WETH",
+    "usd_value": 29700.909511566893
+  },
+  {
+    "tx_hash": "0xdae2cd97e97feaca4707fc805d95c697a47b8bb9a04ffc7d74951b000a5893d0",
+    "token_pair": "FRAX-USDC",
+    "usd_value": 29700.909511566893
+  },
+  {
+    "tx_hash": "0xdae2cd97e97feaca4707fc805d95c697a47b8bb9a04ffc7d74951b000a5893d0",
+    "token_pair": "FRAX-FXS",
+    "usd_value": 29740.904383844096
+  },
+  {
+    "tx_hash": "0x7735cc96f2b83f999596c5e17ae9763325d791cead0ed5a0d1762f47fcb3e3a2",
+    "token_pair": "FXS-WETH",
+    "usd_value": 39178.59372741706
+  },
+  {
+    "tx_hash": "0x51be6705a31e01cb36ef24ec517afba880184e88e22abbffb6cbed6ac8ea2fcf",
+    "token_pair": "RACA-USDT",
+    "usd_value": 2998.148775022292
+  },
+  {
+    "tx_hash": "0x51be6705a31e01cb36ef24ec517afba880184e88e22abbffb6cbed6ac8ea2fcf",
+    "token_pair": "AGIX-USDT",
+    "usd_value": 2998.148775022292
+  },
+  {
+    "tx_hash": "0x7735cc96f2b83f999596c5e17ae9763325d791cead0ed5a0d1762f47fcb3e3a2",
+    "token_pair": "FRAX-USDC",
+    "usd_value": 38982.91353967144
+  },
+  {
+    "tx_hash": "0x51be6705a31e01cb36ef24ec517afba880184e88e22abbffb6cbed6ac8ea2fcf",
+    "token_pair": "AGIX-WETH",
+    "usd_value": 3019.8037936411088
+  },
+  {
+    "tx_hash": "0x7735cc96f2b83f999596c5e17ae9763325d791cead0ed5a0d1762f47fcb3e3a2",
+    "token_pair": "USDC-WETH",
+    "usd_value": 38982.917438246935
+  },
+  {
+    "tx_hash": "0x2303f377a11db44219695f708a041f0c520d5dc38a7eafb69214c869a3433357",
+    "token_pair": "MIM-UST",
+    "usd_value": 14476.793412641966
+  },
+  {
+    "tx_hash": "0x2303f377a11db44219695f708a041f0c520d5dc38a7eafb69214c869a3433357",
+    "token_pair": "DAI-UST",
+    "usd_value": 15534.046332597194
+  },
+  {
+    "tx_hash": "0x2303f377a11db44219695f708a041f0c520d5dc38a7eafb69214c869a3433357",
+    "token_pair": "DAI-MIM",
+    "usd_value": 14963.122525698996
+  },
+  {
+    "tx_hash": "0x51be6705a31e01cb36ef24ec517afba880184e88e22abbffb6cbed6ac8ea2fcf",
+    "token_pair": "RACA-WETH",
+    "usd_value": 2915.3862770749715
+  },
+  {
+    "tx_hash": "0x1725733b3020000ee24daaa5280dade26bbb99fbdfd57618a0b56ea1aa91f860",
+    "token_pair": "FRAX-FXS",
+    "usd_value": 18281.952378629416
+  },
+  {
+    "tx_hash": "0x2304ced14d19e19942140a95cca60a2197fd7d4fa7e092e1185daf9c48a0ec14",
+    "token_pair": "USDC-WETH",
+    "usd_value": 18255.849164818326
+  },
+  {
+    "tx_hash": "0x1725733b3020000ee24daaa5280dade26bbb99fbdfd57618a0b56ea1aa91f860",
+    "token_pair": "DAI-WETH",
+    "usd_value": 18327.37586846501
+  },
+  {
+    "tx_hash": "0x2304ced14d19e19942140a95cca60a2197fd7d4fa7e092e1185daf9c48a0ec14",
+    "token_pair": "FRAX-USDC",
+    "usd_value": 18255.849164818326
+  },
+  {
+    "tx_hash": "0x1725733b3020000ee24daaa5280dade26bbb99fbdfd57618a0b56ea1aa91f860",
+    "token_pair": "FXS-WETH",
+    "usd_value": 18350.917144105617
+  },
+  {
+    "tx_hash": "0x04f78c88d4b0483e84a7559f76d5a05a9da121196d4c361e564be336549cfb2c",
+    "token_pair": "TGOLD-WETH",
+    "usd_value": 2710.006908678286
+  },
+  {
+    "tx_hash": "0x1725733b3020000ee24daaa5280dade26bbb99fbdfd57618a0b56ea1aa91f860",
+    "token_pair": "DAI-FRAX",
+    "usd_value": 18327.009322576607
+  },
+  {
+    "tx_hash": "0x04f78c88d4b0483e84a7559f76d5a05a9da121196d4c361e564be336549cfb2c",
+    "token_pair": "TGOLD-TUSD",
+    "usd_value": 2635.874526667837
+  },
+  {
+    "tx_hash": "0xf233dccea822318d95145c1d2196b576dc393e3c86f1be4faa6c0abb29d14978",
+    "token_pair": "FLOAT-WETH",
+    "usd_value": 4696.547849288693
+  },
+  {
+    "tx_hash": "0x04f78c88d4b0483e84a7559f76d5a05a9da121196d4c361e564be336549cfb2c",
+    "token_pair": "TUSD-USDC",
+    "usd_value": 2638.6812832403157
+  },
+  {
+    "tx_hash": "0xf233dccea822318d95145c1d2196b576dc393e3c86f1be4faa6c0abb29d14978",
+    "token_pair": "USDC-WETH",
+    "usd_value": 4650.927348436757
+  },
+  {
+    "tx_hash": "0x04f78c88d4b0483e84a7559f76d5a05a9da121196d4c361e564be336549cfb2c",
+    "token_pair": "USDC-WETH",
+    "usd_value": 2638.707670588518
+  },
+  {
+    "tx_hash": "0x34a8803be0d05ca4f76d80fbc1a42ea6734b6f4013ae996733e14d8454b5fda5",
+    "token_pair": "MIM-USDC",
+    "usd_value": 25581.16062683429
+  },
+  {
+    "tx_hash": "0x2304ced14d19e19942140a95cca60a2197fd7d4fa7e092e1185daf9c48a0ec14",
+    "token_pair": "FRAX-SUSHI",
+    "usd_value": 18305.48866872658
+  },
+  {
+    "tx_hash": "0x34a8803be0d05ca4f76d80fbc1a42ea6734b6f4013ae996733e14d8454b5fda5",
+    "token_pair": "USDC-UST",
+    "usd_value": 0.0
+  },
+  {
+    "tx_hash": "0x2304ced14d19e19942140a95cca60a2197fd7d4fa7e092e1185daf9c48a0ec14",
+    "token_pair": "SUSHI-WETH",
+    "usd_value": 18273.448423418322
+  },
+  {
+    "tx_hash": "0x34a8803be0d05ca4f76d80fbc1a42ea6734b6f4013ae996733e14d8454b5fda5",
+    "token_pair": "MIM-UST",
+    "usd_value": 25547.798693893783
+  },
+  {
+    "tx_hash": "0xf233dccea822318d95145c1d2196b576dc393e3c86f1be4faa6c0abb29d14978",
+    "token_pair": "FLOAT-USDC",
+    "usd_value": 4650.927348436757
+  },
+  {
+    "tx_hash": "0x1c4ad3d719cff99c1a6711ad9fbdda31aa9f9aee2d0ef7327e9b9c4c0102b460",
+    "token_pair": "DAI-DOLA",
+    "usd_value": 4602.524515024719
+  },
+  {
+    "tx_hash": "0x29e3dbd9c881a79e438ad424e97bc7d17241047810ddde6e42ca9388a7a53829",
+    "token_pair": "AVINOC-USDC",
+    "usd_value": 7613.965735116281
+  },
+  {
+    "tx_hash": "0x1c4ad3d719cff99c1a6711ad9fbdda31aa9f9aee2d0ef7327e9b9c4c0102b460",
+    "token_pair": "INV-WETH",
+    "usd_value": 4691.632118477644
+  },
+  {
+    "tx_hash": "0x29e3dbd9c881a79e438ad424e97bc7d17241047810ddde6e42ca9388a7a53829",
+    "token_pair": "AVINOC-WETH",
+    "usd_value": 7647.648629030737
+  },
+  {
+    "tx_hash": "0x7c2418599ac1a2ee268fb85ad8b4821ebcc5d7b1104e8befc6ce7ccf0dc4038a",
+    "token_pair": "EURA-WETH",
+    "usd_value": 7195.2646217548145
+  },
+  {
+    "tx_hash": "0x29e3dbd9c881a79e438ad424e97bc7d17241047810ddde6e42ca9388a7a53829",
+    "token_pair": "USDC-WETH",
+    "usd_value": 7613.965735116281
+  },
+  {
+    "tx_hash": "0x1c4ad3d719cff99c1a6711ad9fbdda31aa9f9aee2d0ef7327e9b9c4c0102b460",
+    "token_pair": "DAI-WETH",
+    "usd_value": 4602.529126997565
+  },
+  {
+    "tx_hash": "0x7c2418599ac1a2ee268fb85ad8b4821ebcc5d7b1104e8befc6ce7ccf0dc4038a",
+    "token_pair": "PAL-WETH",
+    "usd_value": 7402.165767318084
+  },
+  {
+    "tx_hash": "0x7c2418599ac1a2ee268fb85ad8b4821ebcc5d7b1104e8befc6ce7ccf0dc4038a",
+    "token_pair": "EURA-PAL",
+    "usd_value": 7244.909993359609
+  },
+  {
+    "tx_hash": "0x1c4ad3d719cff99c1a6711ad9fbdda31aa9f9aee2d0ef7327e9b9c4c0102b460",
+    "token_pair": "DOLA-INV",
+    "usd_value": 4920.0173681380575
+  },
+  {
+    "tx_hash": "0x3192ce707d70ec87ba17faadc0c8b22351b1cbbf714aeb2a775f669f6a0242bd",
+    "token_pair": "ibEUR-sEUR",
+    "usd_value": 40411.57072554015
+  },
+  {
+    "tx_hash": "0x3192ce707d70ec87ba17faadc0c8b22351b1cbbf714aeb2a775f669f6a0242bd",
+    "token_pair": "EURA-WETH",
+    "usd_value": 39751.32015830544
+  },
+  {
+    "tx_hash": "0x3192ce707d70ec87ba17faadc0c8b22351b1cbbf714aeb2a775f669f6a0242bd",
+    "token_pair": "EURS-sEUR",
+    "usd_value": 40406.12293683
+  },
+  {
+    "tx_hash": "0x3192ce707d70ec87ba17faadc0c8b22351b1cbbf714aeb2a775f669f6a0242bd",
+    "token_pair": "EURA-ibEUR",
+    "usd_value": 39527.58685423754
+  },
+  {
+    "tx_hash": "0x3192ce707d70ec87ba17faadc0c8b22351b1cbbf714aeb2a775f669f6a0242bd",
+    "token_pair": "EURA-EURS",
+    "usd_value": 40119.186171286856
+  },
+  {
+    "tx_hash": "0x427d51d759c398b23ff3d62579a7bac602db0f106863dfbbce0e3b2aa1c5a8c3",
+    "token_pair": "BNT-QUICK",
+    "usd_value": 247.70991413127933
+  },
+  {
+    "tx_hash": "0xe563b3046b4e5b41e6e58027fc3eb5e8e99533fe045eede01732b7839114fcdf",
+    "token_pair": "USDT-WETH",
+    "usd_value": 30498.605104496008
+  },
+  {
+    "tx_hash": "0x427d51d759c398b23ff3d62579a7bac602db0f106863dfbbce0e3b2aa1c5a8c3",
+    "token_pair": "QUICK-WETH",
+    "usd_value": 200.4118330078125
+  },
+  {
+    "tx_hash": "0xe563b3046b4e5b41e6e58027fc3eb5e8e99533fe045eede01732b7839114fcdf",
+    "token_pair": "USDT-WETH",
+    "usd_value": 122115.75376445003
+  },
+  {
+    "tx_hash": "0x427d51d759c398b23ff3d62579a7bac602db0f106863dfbbce0e3b2aa1c5a8c3",
+    "token_pair": "CEEK-WETH",
+    "usd_value": 303.88337279279017
+  },
+  {
+    "tx_hash": "0xc7733415fa44e2850458d455040bb0f2cc50bf6649454f485d4bd268a9148b93",
+    "token_pair": "USDC-WETH",
+    "usd_value": 7962.23739966228
+  },
+  {
+    "tx_hash": "0x427d51d759c398b23ff3d62579a7bac602db0f106863dfbbce0e3b2aa1c5a8c3",
+    "token_pair": "BNT-CEEK",
+    "usd_value": 247.70991413127933
+  },
+  {
+    "tx_hash": "0xc7733415fa44e2850458d455040bb0f2cc50bf6649454f485d4bd268a9148b93",
+    "token_pair": "AAVE-WETH",
+    "usd_value": 8166.605689929223
+  },
+  {
+    "tx_hash": "0xe563b3046b4e5b41e6e58027fc3eb5e8e99533fe045eede01732b7839114fcdf",
+    "token_pair": "USDC-WETH",
+    "usd_value": 91252.68711243126
+  },
+  {
+    "tx_hash": "0xc7733415fa44e2850458d455040bb0f2cc50bf6649454f485d4bd268a9148b93",
+    "token_pair": "AAVE-BNT",
+    "usd_value": 8143.009880101021
+  },
+  {
+    "tx_hash": "0xe563b3046b4e5b41e6e58027fc3eb5e8e99533fe045eede01732b7839114fcdf",
+    "token_pair": "USDC-USDT",
+    "usd_value": 91619.41116367927
+  },
+  {
+    "tx_hash": "0xc7733415fa44e2850458d455040bb0f2cc50bf6649454f485d4bd268a9148b93",
+    "token_pair": "AMP-BNT",
+    "usd_value": 8106.383943973906
+  },
+  {
+    "tx_hash": "0xc7733415fa44e2850458d455040bb0f2cc50bf6649454f485d4bd268a9148b93",
+    "token_pair": "AMP-FRAX",
+    "usd_value": 8135.8650333895375
+  },
+  {
+    "tx_hash": "0xc7733415fa44e2850458d455040bb0f2cc50bf6649454f485d4bd268a9148b93",
+    "token_pair": "FRAX-USDC",
+    "usd_value": 7962.23739966228
+  },
+  {
+    "tx_hash": "0xa95d47629fc2a63a21bd3d43cac272c02677354b732eaddef731c5695b8c5081",
+    "token_pair": "USDC-WETH",
+    "usd_value": 25331.264574007873
+  },
+  {
+    "tx_hash": "0xa95d47629fc2a63a21bd3d43cac272c02677354b732eaddef731c5695b8c5081",
+    "token_pair": "EURA-USDC",
+    "usd_value": 25331.23923677764
+  },
+  {
+    "tx_hash": "0xa95d47629fc2a63a21bd3d43cac272c02677354b732eaddef731c5695b8c5081",
+    "token_pair": "EURA-WETH",
+    "usd_value": 25325.982640721762
+  },
+  {
+    "tx_hash": "0x521535e695d3dee3f2160ec4a7916467e647219a1f0fdcf21ed75e1b10b6cf11",
+    "token_pair": "WBTC-WETH",
+    "usd_value": 38179.9336446365
+  },
+  {
+    "tx_hash": "0x521535e695d3dee3f2160ec4a7916467e647219a1f0fdcf21ed75e1b10b6cf11",
+    "token_pair": "BNT-WBTC",
+    "usd_value": 38179.9336446365
+  },
+  {
+    "tx_hash": "0x521535e695d3dee3f2160ec4a7916467e647219a1f0fdcf21ed75e1b10b6cf11",
+    "token_pair": "BNT-LINK",
+    "usd_value": 38293.19047683764
+  },
+  {
+    "tx_hash": "0x478ec50b3287a71200cce7eafbebe99b827f423a7a4dc06464823c06c07206bb",
+    "token_pair": "$TRDL-WETH",
+    "usd_value": 182.25581398440193
+  },
+  {
+    "tx_hash": "0x478ec50b3287a71200cce7eafbebe99b827f423a7a4dc06464823c06c07206bb",
+    "token_pair": "AAVE-WETH",
+    "usd_value": 1089.4830809515895
+  },
+  {
+    "tx_hash": "0x478ec50b3287a71200cce7eafbebe99b827f423a7a4dc06464823c06c07206bb",
+    "token_pair": "BZRX-WETH",
+    "usd_value": 146.81356707649982
+  },
+  {
+    "tx_hash": "0xbdddf8b0588a03200babf98e225333e83e1427902f24a3018dcc456c6b98a21e",
+    "token_pair": "USDC-UST",
+    "usd_value": 28444.2488192382
+  },
+  {
+    "tx_hash": "0x478ec50b3287a71200cce7eafbebe99b827f423a7a4dc06464823c06c07206bb",
+    "token_pair": "MTA-mUSD",
+    "usd_value": 273.7783663926202
+  },
+  {
+    "tx_hash": "0x478ec50b3287a71200cce7eafbebe99b827f423a7a4dc06464823c06c07206bb",
+    "token_pair": "mUSD-WETH",
+    "usd_value": 347.7511096464605
+  },
+  {
+    "tx_hash": "0xbdddf8b0588a03200babf98e225333e83e1427902f24a3018dcc456c6b98a21e",
+    "token_pair": "MIM-USDC",
+    "usd_value": 26852.634588258108
+  },
+  {
+    "tx_hash": "0x478ec50b3287a71200cce7eafbebe99b827f423a7a4dc06464823c06c07206bb",
+    "token_pair": "$TRDL-WETH",
+    "usd_value": 143.7385034235048
+  },
+  {
+    "tx_hash": "0xbdddf8b0588a03200babf98e225333e83e1427902f24a3018dcc456c6b98a21e",
+    "token_pair": "MIM-UST",
+    "usd_value": 28051.232930613456
+  },
+  {
+    "tx_hash": "0x478ec50b3287a71200cce7eafbebe99b827f423a7a4dc06464823c06c07206bb",
+    "token_pair": "BZRX-WETH",
+    "usd_value": 98.76022938006999
+  },
+  {
+    "tx_hash": "0x478ec50b3287a71200cce7eafbebe99b827f423a7a4dc06464823c06c07206bb",
+    "token_pair": "AAVE-USDP",
+    "usd_value": 1091.7102239806875
+  },
+  {
+    "tx_hash": "0x478ec50b3287a71200cce7eafbebe99b827f423a7a4dc06464823c06c07206bb",
+    "token_pair": "MTA-WETH",
+    "usd_value": 288.06201659224143
+  },
+  {
+    "tx_hash": "0x478ec50b3287a71200cce7eafbebe99b827f423a7a4dc06464823c06c07206bb",
+    "token_pair": "USDP-WETH",
+    "usd_value": 1010.3576732302109
+  },
+  {
+    "tx_hash": "0xce0e4403c5384d6e0fb62288f918deccf2649d1f43409eb6bac6d2ad517de747",
+    "token_pair": "CEL-WETH",
+    "usd_value": 461.31838707503306
+  },
+  {
+    "tx_hash": "0xce0e4403c5384d6e0fb62288f918deccf2649d1f43409eb6bac6d2ad517de747",
+    "token_pair": "APE-WETH",
+    "usd_value": 527.791489893779
+  },
+  {
+    "tx_hash": "0xce0e4403c5384d6e0fb62288f918deccf2649d1f43409eb6bac6d2ad517de747",
+    "token_pair": "CEL-DRGN",
+    "usd_value": 460.3704715954029
+  },
+  {
+    "tx_hash": "0xce0e4403c5384d6e0fb62288f918deccf2649d1f43409eb6bac6d2ad517de747",
+    "token_pair": "APE-DRGN",
+    "usd_value": 523.7908204636697
+  },
+  {
+    "tx_hash": "0x7623407683952fc197e1d543bb3bd6c83689ccfa7c54dc301f42f5db14d6257e",
+    "token_pair": "DSA-USDC",
+    "usd_value": 533.86238612175
+  },
+  {
+    "tx_hash": "0x7623407683952fc197e1d543bb3bd6c83689ccfa7c54dc301f42f5db14d6257e",
+    "token_pair": "DSA-DSBTC",
+    "usd_value": 0.0
+  },
+  {
+    "tx_hash": "0x7623407683952fc197e1d543bb3bd6c83689ccfa7c54dc301f42f5db14d6257e",
+    "token_pair": "DSBTC-USDC",
+    "usd_value": 583.1612353618169
+  },
+  {
+    "tx_hash": "0xbdcaaf38298199d25f133686765c17bc7c57442ef36199cddf10e363c499851f",
+    "token_pair": "BNT-USDC",
+    "usd_value": 34799.46730537479
+  },
+  {
+    "tx_hash": "0xbdcaaf38298199d25f133686765c17bc7c57442ef36199cddf10e363c499851f",
+    "token_pair": "LINK-USDC",
+    "usd_value": 34982.85410425713
+  },
+  {
+    "tx_hash": "0xbdcaaf38298199d25f133686765c17bc7c57442ef36199cddf10e363c499851f",
+    "token_pair": "BNT-LINK",
+    "usd_value": 34828.981935080716
+  },
+  {
+    "tx_hash": "0x55fda36cfe4e8b4f6328ef2385e762c5f1a8dd3179ab49dc4fc4e8e804a52cda",
+    "token_pair": "FOX-WETH",
+    "usd_value": 15790.86403260198
+  },
+  {
+    "tx_hash": "0x55fda36cfe4e8b4f6328ef2385e762c5f1a8dd3179ab49dc4fc4e8e804a52cda",
+    "token_pair": "FEI-FOX",
+    "usd_value": 0.8039286765453587
+  },
+  {
+    "tx_hash": "0x55fda36cfe4e8b4f6328ef2385e762c5f1a8dd3179ab49dc4fc4e8e804a52cda",
+    "token_pair": "FEI-USDC",
+    "usd_value": 15661.759079927624
+  },
+  {
+    "tx_hash": "0x55fda36cfe4e8b4f6328ef2385e762c5f1a8dd3179ab49dc4fc4e8e804a52cda",
+    "token_pair": "USDC-WETH",
+    "usd_value": 15661.759079927624
+  },
+  {
+    "tx_hash": "0xf34d0c17cc14f0d92a45f926f6a008195f1c000c15871f5df3af43c2010b83d7",
+    "token_pair": "CHSB-WETH",
+    "usd_value": 3105.124087658969
+  }
+]
