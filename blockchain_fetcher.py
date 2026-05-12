@@ -158,6 +158,10 @@ class BlockchainFetcher:
                 amount_in = amount1_in
                 amount_out = amount0_out
                 direction = "BUY"
+            
+            price = None
+            if amount_in and amount_out:
+                price = amount_out / amount_in
 
 
             return {
@@ -168,6 +172,9 @@ class BlockchainFetcher:
                 "amount_in": amount_in,
                 "amount_out": amount_out,
                 "direction": direction,
+
+                "price": price,
+                "trader": tx_hash  # temporary placeholder
             }
 
         except Exception:

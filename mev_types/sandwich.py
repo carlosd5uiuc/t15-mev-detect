@@ -3,67 +3,52 @@ def detect_sandwich_attacks(transactions):
     Detect sandwich attacks from decoded transactions.
     """
 
-    # ----------------------------
-    # STEP 1: FLATTEN SWAPS
-    # ----------------------------
     swaps = []
 
     for tx in transactions:
         for swap in getattr(tx, "swaps", []):
+            if not swap:
+                continue
+
             swaps.append({
                 "tx_hash": swap["tx_hash"],
                 "pool": swap["pool"],
                 "direction": swap.get("direction"),
+                "price": swap.get("price"),
                 "block_index": getattr(tx, "block_index", None),
-                "amount_in": swap.get("amount_in"),
-                "amount_out": swap.get("amount_out"),
             })
 
-    # ----------------------------
-    # STEP 2: SORT BY EXECUTION ORDER
-    # ----------------------------
-    swaps.sort(key=lambda x: x["block_index"] if x["block_index"] is not None else 999999)
+    # sort execution order
+    swaps.sort(key=lambda x: x["block_index"])
 
-    # ----------------------------
-    # STEP 3: GROUP BY POOL
-    # ----------------------------
-    from collections import defaultdict
-
-    pool_map = defaultdict(list)
+    pool_map = {}
 
     for s in swaps:
-        pool_map[s["pool"]].append(s)
+        pool_map.setdefault(s["pool"], []).append(s)
 
-    sandwiches = []
+    results = []
 
-    # ----------------------------
-    # STEP 4: SLIDING WINDOW SEARCH
-    # ----------------------------
-    for pool, pool_swaps in pool_map.items():
+    for pool, s_list in pool_map.items():
 
-        for i in range(len(pool_swaps) - 2):
+        for i in range(len(s_list) - 2):
 
-            first = pool_swaps[i]
-            middle = pool_swaps[i + 1]
-            last = pool_swaps[i + 2]
+            a, b, c = s_list[i], s_list[i+1], s_list[i+2]
 
-            # ----------------------------
-            # STEP 5: CHECK PATTERN
-            # ----------------------------
-            if not (
-                first["direction"] == "BUY"
-                and middle["direction"] == "BUY"
-                and last["direction"] == "SELL"
-            ):
+            if None in (a["price"], b["price"], c["price"]):
                 continue
 
-            # ensure same pool already guaranteed
+            # -------------------------
+            # PRICE IMPACT CHECK
+            # -------------------------
+            price_spike = a["price"] < b["price"]
+            price_revert = c["price"] < b["price"]
 
-            sandwiches.append({
-                "pool": pool,
-                "bot_buy": first,
-                "victim": middle,
-                "bot_sell": last,
-            })
+            if price_spike and price_revert:
+                results.append({
+                    "pool": pool,
+                    "bot_buy": a,
+                    "victim": b,
+                    "bot_sell": c
+                })
 
-    return sandwiches
+    return results
