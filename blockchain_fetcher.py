@@ -93,26 +93,39 @@ class BlockchainFetcher:
         self.token_decimals_cache = load_token_decimals_cache()
         self.token_metadata_cache = load_token_metadata_cache()
 
+        self.pool_token_cache = {}
+
     def get_pool_tokens(self, pool_address):
-        """
-        Returns real token0 and token1 for a Uniswap V2 pool
-        """
+
+        pool_address = pool_address.lower()
+
+        # ----------------------------
+        # CACHE HIT
+        # ----------------------------
+        if pool_address in self.pool_token_cache:
+            return self.pool_token_cache[pool_address]
 
         try:
-            pool_address = Web3.to_checksum_address(pool_address)
+            checksum = Web3.to_checksum_address(pool_address)
 
             contract = self.web3_client.eth.contract(
-                address=pool_address,
+                address=checksum,
                 abi=self.UNISWAP_V2_PAIR_ABI
             )
 
-            token0 = contract.functions.token0().call()
-            token1 = contract.functions.token1().call()
+            token0 = contract.functions.token0().call().lower()
+            token1 = contract.functions.token1().call().lower()
 
-            return token0.lower(), token1.lower()
+            # ----------------------------
+            # SAVE CACHE
+            # ----------------------------
+            self.pool_token_cache[pool_address] = (token0, token1)
+
+            return token0, token1
 
         except Exception as e:
-            logging.warning(f"Failed to resolve pool tokens for {pool_address}: {e}")
+            logging.warning(f"Failed pool lookup {pool_address}: {e}")
+
             return None, None
 
     def normalize_swap_intent(self, log):
