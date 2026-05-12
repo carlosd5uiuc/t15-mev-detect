@@ -1,71 +1,69 @@
-from collections import defaultdict
-from typing import List
-
-
-def detect_sandwich_attacks(transactions: List):
+def detect_sandwich_attacks(transactions):
     """
-    Detect simple sandwich patterns using API-based block data:
-
-        bot_tx (buy) → victim_tx → bot_tx (sell)
-
-    NOTE:
-    This is heuristic-based (no swap decoding).
+    Detect sandwich attacks from decoded transactions.
     """
 
-    # 1. group transactions by block
-    blocks = defaultdict(list)
+    # ----------------------------
+    # STEP 1: FLATTEN SWAPS
+    # ----------------------------
+    swaps = []
 
     for tx in transactions:
-        if tx.block_height is None:
-            continue
-        blocks[tx.block_height].append(tx)
+        for swap in getattr(tx, "swaps", []):
+            swaps.append({
+                "tx_hash": swap["tx_hash"],
+                "pool": swap["pool"],
+                "direction": swap.get("direction"),
+                "block_index": getattr(tx, "block_index", None),
+                "amount_in": swap.get("amount_in"),
+                "amount_out": swap.get("amount_out"),
+            })
+
+    # ----------------------------
+    # STEP 2: SORT BY EXECUTION ORDER
+    # ----------------------------
+    swaps.sort(key=lambda x: x["block_index"] if x["block_index"] is not None else 999999)
+
+    # ----------------------------
+    # STEP 3: GROUP BY POOL
+    # ----------------------------
+    from collections import defaultdict
+
+    pool_map = defaultdict(list)
+
+    for s in swaps:
+        pool_map[s["pool"]].append(s)
 
     sandwiches = []
 
-    # 2. analyze each block
-    for block, txs in blocks.items():
+    # ----------------------------
+    # STEP 4: SLIDING WINDOW SEARCH
+    # ----------------------------
+    for pool, pool_swaps in pool_map.items():
 
-        # order by time (approx execution order)
-        txs.sort(key=lambda x: x.timestamp or 0)
+        for i in range(len(pool_swaps) - 2):
 
-        # need at least 3 txs
-        if len(txs) < 3:
-            continue
+            first = pool_swaps[i]
+            middle = pool_swaps[i + 1]
+            last = pool_swaps[i + 2]
 
-        # sliding window: bot → victim → bot
-        for i in range(1, len(txs) - 1):
-
-            tx_prev = txs[i - 1]
-            tx_mid = txs[i]
-            tx_next = txs[i + 1]
-
-            # -----------------------------
-            # BASIC FILTERS (same DEX / contract)
-            # -----------------------------
-            if (
-                tx_prev.to_addr != tx_mid.to_addr or
-                tx_mid.to_addr != tx_next.to_addr
+            # ----------------------------
+            # STEP 5: CHECK PATTERN
+            # ----------------------------
+            if not (
+                first["direction"] == "BUY"
+                and middle["direction"] == "BUY"
+                and last["direction"] == "SELL"
             ):
                 continue
 
-            # ignore zero-value noise txs
-            if int(tx_mid.value or 0) == 0:
-                continue
+            # ensure same pool already guaranteed
 
-            # -----------------------------
-            # SANDWICH HEURISTIC
-            # -----------------------------
-            # bot pays higher gas → victim normal → bot pays higher again
-            if (
-                int(tx_prev.gasPrice or 0) > int(tx_mid.gasPrice or 0) and
-                int(tx_next.gasPrice or 0) > int(tx_mid.gasPrice or 0)
-            ):
-                sandwiches.append({
-                    "block": block,
-                    "bot_front_run": tx_prev.tx_hash,
-                    "victim": tx_mid.tx_hash,
-                    "bot_back_run": tx_next.tx_hash,
-                    "contract": tx_mid.to_addr,
-                })
+            sandwiches.append({
+                "pool": pool,
+                "bot_buy": first,
+                "victim": middle,
+                "bot_sell": last,
+            })
 
     return sandwiches

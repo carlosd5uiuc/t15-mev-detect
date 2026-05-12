@@ -38,7 +38,10 @@ class Transaction:
             self.tx_hash = hex_value if hex_value.startswith("0x") else f"0x{hex_value}"
         self.to_addr = to_addr
         self.from_addr = from_addr
-        self.to_addr = to_addr
+
+        #for swap
+        self.swaps = []
+        self.transfers = []
 
         # MEV fields (optional)
         self.block_height = block_height
@@ -50,15 +53,125 @@ class Transaction:
         return f"Tx({self.tx_hash}, from={self.from_addr}, to={self.to_addr})" 
     
 class SwapEvent:
-    pass
+    def __init__(self, tx_hash, trader, token_in, token_out, amount_in, amount_out, pool, block_index=None):
+        self.tx_hash = tx_hash
+        self.trader = trader
+        self.token_in = token_in
+        self.token_out = token_out
+        self.amount_in = amount_in
+        self.amount_out = amount_out
+        self.pool = pool
+        self.block_index = block_index
 
 class BlockchainFetcher:
+    UNISWAP_V2_PAIR_ABI = [
+    {
+        "name": "token0",
+        "outputs": [{"type": "address"}],
+        "inputs": [],
+        "stateMutability": "view",
+        "type": "function",
+    },
+    {
+        "name": "token1",
+        "outputs": [{"type": "address"}],
+        "inputs": [],
+        "stateMutability": "view",
+        "type": "function",
+    }]
+    
     def __init__(self):
         self.web3_client = Web3(Web3.HTTPProvider(f"https://mainnet.infura.io/v3/{rpc_url_key}"))
-        self.web3_client.is_connected()
+        # self.web3_client.is_connected()
+        connected = self.web3_client.is_connected()
+
+        if connected:
+            print("Connected to Ethereum Mainnet")
+        else:
+            print("Failed to connect")
         self.TRANSFER_TOPIC = self.web3_client.keccak(text="Transfer(address,address,uint256)").hex()
         self.token_decimals_cache = load_token_decimals_cache()
         self.token_metadata_cache = load_token_metadata_cache()
+
+    def get_pool_tokens(self, pool_address):
+        """
+        Returns real token0 and token1 for a Uniswap V2 pool
+        """
+
+        try:
+            pool_address = Web3.to_checksum_address(pool_address)
+
+            contract = self.web3_client.eth.contract(
+                address=pool_address,
+                abi=self.UNISWAP_V2_PAIR_ABI
+            )
+
+            token0 = contract.functions.token0().call()
+            token1 = contract.functions.token1().call()
+
+            return token0.lower(), token1.lower()
+
+        except Exception as e:
+            logging.warning(f"Failed to resolve pool tokens for {pool_address}: {e}")
+            return None, None
+
+    def normalize_swap_intent(self, log):
+        """
+        Converts raw swap log → structured MEV intent
+        """
+
+        pool = log["address"].lower()
+        data = log.get("data", "0x")
+
+        tx_hash = log.get("transactionHash")
+        if tx_hash:
+            tx_hash = tx_hash.hex() if not isinstance(tx_hash, str) else tx_hash
+
+        try:
+            raw = bytes.fromhex(data[2:] if data.startswith("0x") else data)
+
+            amount0_in = int.from_bytes(raw[0:32], "big")
+            amount1_in = int.from_bytes(raw[32:64], "big")
+            amount0_out = int.from_bytes(raw[64:96], "big")
+            amount1_out = int.from_bytes(raw[96:128], "big")
+
+            # ----------------------------
+            # GET REAL TOKEN ADDRESSES
+            # ----------------------------
+            token0, token1 = self.get_pool_tokens(pool)
+
+            if token0 is None or token1 is None:
+                return None
+
+            # ----------------------------
+            # MAP REAL TOKENS
+            # ----------------------------
+            if amount0_in > 0:
+                token_in = token0
+                token_out = token1
+                amount_in = amount0_in
+                amount_out = amount1_out
+                direction = "SELL"
+            else:
+                token_in = token1
+                token_out = token0
+                amount_in = amount1_in
+                amount_out = amount0_out
+                direction = "BUY"
+
+
+            return {
+                "tx_hash": tx_hash,
+                "pool": pool,
+                "token_in": token_in,
+                "token_out": token_out,
+                "amount_in": amount_in,
+                "amount_out": amount_out,
+                "direction": direction,
+            }
+
+        except Exception:
+            return None
 
     def get_token_symbol(self, token_address):
         cache_key = token_address.lower()
@@ -151,17 +264,38 @@ class BlockchainFetcher:
             block_number = 'latest'
         block = self.web3_client.eth.get_block(block_number, full_transactions=True)
         # return [Transaction(tx['hash'], tx['from'], tx['to']) for tx in block['transactions']]
-        return [Transaction(
-            tx_hash=tx["hash"],
-            from_addr=tx["from"],
-            to_addr=tx["to"] if tx["to"] else None,
-            block_height=block["number"],
-            timestamp=None,          # optional (not directly in eth_getBlock)
-            gas_price=tx.get("gasPrice"),
-            value=tx.get("value", 0),
-        )   
-    for tx in block["transactions"]
-]
+        transactions = []
+
+        for index, tx in enumerate(block["transactions"]):
+
+            tx_hash = tx["hash"]
+
+            tx_obj = Transaction(
+                tx_hash=tx["hash"],
+                from_addr=tx["from"],
+                to_addr=tx["to"] if tx["to"] else None,
+                block_height=block["number"],
+                timestamp=None,
+                gas_price=tx.get("gasPrice"),
+                value=tx.get("value", 0),
+            )
+
+            #swap decoding
+            try:
+                receipt = self.web3_client.eth.get_transaction_receipt(tx["hash"])
+                tx_obj.swaps = self.decode_swap_events(receipt) #attach swap events to the transaction object
+                tx_obj.transfers = self.extract_transfers_from_receipt(receipt) #attach transfer events to the transaction object
+            except Exception as e:
+                logging.warning(f"Failed receipt decode for {tx_hash}: {e}")
+                tx_obj.swaps = []
+                tx_obj.transfers = []
+            
+            #store position in block (VERY important for sandwiches)
+            tx_obj.block_index = index
+
+            transactions.append(tx_obj)
+
+        return transactions
     
     def fetch_transaction_by_tx(self, tx_hash):
         return self.web3_client.eth.get_transaction(tx_hash)
@@ -267,8 +401,32 @@ class BlockchainFetcher:
 
     def fetch_range(self, start: int, end: int) -> List[Transaction]:
         pass
-    def decode_swap_events(self, tx_receipt) -> List[SwapEvent]:
-        pass
+
+    def decode_swap_events(self, receipt):
+        swaps = []
+
+        SWAP_TOPIC = self.web3_client.keccak(text="Swap(address,uint256,uint256,uint256,uint256,address)").hex()
+
+        for log in receipt["logs"]:
+            topics = log.get("topics", [])
+
+            if not topics:
+                continue
+
+            topic0 = topics[0]
+            if not isinstance(topic0, str):
+                topic0 = topic0.hex()
+
+            if topic0 != SWAP_TOPIC:
+                continue
+
+            intent = self.normalize_swap_intent(log)
+
+            if intent:
+                swaps.append(intent)
+
+        return swaps
+    
     def get_mempool_pending(self) -> List[Transaction]:
         pass
 
@@ -318,7 +476,7 @@ def main() -> None:
         print(result)
     
     elif args.command == "sandwich":
-        txs = client.fetch_local_transactions(args.id)
+        txs = client.fetch_block_transactions(args.id)
         result = detect_sandwich_attacks(txs)
         print(result)
     
