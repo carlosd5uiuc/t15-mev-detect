@@ -88,13 +88,13 @@ def display_arbitrage_table(rows, fetcher):
             st.code(str(selected["Net Amount"]))
 
 def run_detection(mev_type: str, data):
-    if mev_type == "arbitrage":
+    if mev_type == "Arbitrage":
         return calculate_arbitrage(data)
 
     if mev_type == "frontrun":
         return detect_front_running(data)
 
-    if mev_type == "sandwich":
+    if mev_type == "Sandwich":
         return detect_sandwich_attacks(data)
 
     raise ValueError(f"Unsupported MEV type: {mev_type}")
@@ -281,7 +281,7 @@ elif mode == "Block":
     block_number = st.number_input("Block number", min_value=0, step=1)
 
     if st.button("Analyze block"):
-        if mev_type == "arbitrage":
+        if mev_type == "Arbitrage":
             with st.spinner("Analyzing block..."):
                 fetcher = BlockchainFetcher()
 
@@ -308,7 +308,7 @@ elif mode == "Block":
                 if not all_results:
                     st.warning("No MEV pattern detected.")
 
-        elif mev_type == "sandwich":
+        elif mev_type == "Sandwich":
             with st.spinner("Analyzing block..."):
                 fetcher = BlockchainFetcher()
                 txs = fetcher.fetch_block_transactions(block_number)
@@ -320,12 +320,12 @@ elif mode == "Block":
                 if not results:
                     st.warning("No sandwich attacks detected.")
             
-    if mev_type == "arbitrage" and st.session_state.arbitrage_rows:
+    if mev_type == "Arbitrage" and st.session_state.arbitrage_rows:
         fetcher = BlockchainFetcher()
         st.subheader("Results")
         display_arbitrage_table(st.session_state.arbitrage_rows, fetcher)
 
-    elif mev_type == "sandwich" and st.session_state.sandwich_rows:
+    elif mev_type == "Sandwich" and st.session_state.sandwich_rows:
         st.subheader("Results")
         display_sandwich_table(st.session_state.sandwich_rows)
 
