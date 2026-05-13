@@ -49,6 +49,3 @@ Cached transaction receipt files are stored locally under:
 ```text
 data/receipts/
 ```
-
-The cache folder is created automatically when needed.
-```
