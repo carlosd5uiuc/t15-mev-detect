@@ -128,11 +128,10 @@ class BlockchainFetcher:
 
             return None, None
 
-    def normalize_swap_intent(self, log):
+    def normalize_swap_intent(self, log, transactionIndex):
         """
         Converts raw swap log → structured MEV intent
         """
-
         pool = log["address"].lower()
         data = log.get("data", "0x")
 
@@ -141,7 +140,7 @@ class BlockchainFetcher:
             tx_hash = tx_hash.hex() if not isinstance(tx_hash, str) else tx_hash
 
         try:
-            raw = bytes.fromhex(data[2:] if data.startswith("0x") else data)
+            raw = bytes(data)
 
             amount0_in = int.from_bytes(raw[0:32], "big")
             amount1_in = int.from_bytes(raw[32:64], "big")
@@ -156,26 +155,55 @@ class BlockchainFetcher:
             if token0 is None or token1 is None:
                 return None
 
+            decimals0 = self.get_token_decimals(token0)
+            decimals1 = self.get_token_decimals(token1)
+
+            amount0_in_normalized = amount0_in / (10 ** decimals0)
+            amount1_in_normalized = amount1_in / (10 ** decimals1)
+            amount0_out_normalized = amount0_out / (10 ** decimals0)
+            amount1_out_normalized = amount1_out / (10 ** decimals1)
+                        
             # ----------------------------
             # MAP REAL TOKENS
             # ----------------------------
             if amount0_in > 0:
                 token_in = token0
                 token_out = token1
-                amount_in = amount0_in
-                amount_out = amount1_out
+                amount_in = amount0_in_normalized
+                amount_out = amount1_out_normalized
                 direction = "SELL"
             else:
                 token_in = token1
                 token_out = token0
-                amount_in = amount1_in
-                amount_out = amount0_out
+                amount_in = amount1_in_normalized
+                amount_out = amount0_out_normalized
                 direction = "BUY"
             
-            price = None
-            if amount_in and amount_out:
-                price = amount_out / amount_in
+            amount0 = amount0_in_normalized if amount0_in > 0 else amount0_out_normalized
+            amount1 = amount1_in_normalized if amount1_in > 0 else amount1_out_normalized
 
+            price = None
+            if amount0 > 0 and amount1 > 0:
+                price = amount1 / amount0
+
+            # print(f"""
+            #     pool: {pool}
+            #     token0: {token0}
+            #     token1: {token1}
+
+            #     amount0_in: {amount0_in_normalized}
+            #     amount1_in: {amount1_in_normalized}
+            #     amount0_out: {amount0_out_normalized}
+            #     amount1_out: {amount1_out_normalized}
+
+            #     token_in: {token_in}
+            #     token_out: {token_out}
+            #     amount_in: {amount_in}
+            #     amount_out: {amount_out}
+            #     direction: {direction}
+
+            #     normalized_price_token1_per_token0: {price}
+            #     """)
 
             return {
                 "tx_hash": tx_hash,
@@ -185,12 +213,14 @@ class BlockchainFetcher:
                 "amount_in": amount_in,
                 "amount_out": amount_out,
                 "direction": direction,
+                "transactionIndex": transactionIndex,
 
                 "price": price,
                 "trader": tx_hash  # temporary placeholder
             }
 
-        except Exception:
+        except Exception as e:
+            print(e)
             return None
 
     def get_token_symbol(self, token_address):
@@ -285,6 +315,7 @@ class BlockchainFetcher:
         block = self.web3_client.eth.get_block(block_number, full_transactions=True)
         # return [Transaction(tx['hash'], tx['from'], tx['to']) for tx in block['transactions']]
         transactions = []
+        SWAP_TOPIC = self.web3_client.keccak(text="Swap(address,uint256,uint256,uint256,uint256,address)").hex()
 
         for index, tx in enumerate(block["transactions"]):
 
@@ -303,7 +334,7 @@ class BlockchainFetcher:
             #swap decoding
             try:
                 receipt = self.web3_client.eth.get_transaction_receipt(tx["hash"])
-                tx_obj.swaps = self.decode_swap_events(receipt) #attach swap events to the transaction object
+                tx_obj.swaps = self.decode_swap_events(receipt, SWAP_TOPIC) #attach swap events to the transaction object
                 tx_obj.transfers = self.extract_transfers_from_receipt(receipt) #attach transfer events to the transaction object
             except Exception as e:
                 logging.warning(f"Failed receipt decode for {tx_hash}: {e}")
@@ -312,7 +343,6 @@ class BlockchainFetcher:
             
             #store position in block (VERY important for sandwiches)
             tx_obj.block_index = index
-
             transactions.append(tx_obj)
 
         return transactions
@@ -422,10 +452,8 @@ class BlockchainFetcher:
     def fetch_range(self, start: int, end: int) -> List[Transaction]:
         pass
 
-    def decode_swap_events(self, receipt):
+    def decode_swap_events(self, receipt, SWAP_TOPIC) -> List[dict]:
         swaps = []
-
-        SWAP_TOPIC = self.web3_client.keccak(text="Swap(address,uint256,uint256,uint256,uint256,address)").hex()
 
         for log in receipt["logs"]:
             topics = log.get("topics", [])
@@ -441,7 +469,7 @@ class BlockchainFetcher:
                 continue
 
             #normalize swap
-            intent = self.normalize_swap_intent(log)
+            intent = self.normalize_swap_intent(log, receipt['transactionIndex'])
 
             if not intent:
                 continue
@@ -465,18 +493,18 @@ class BlockchainFetcher:
             intent["trader"] = trader
 
             #compute prices
-            amount_in = intent.get("amount_in")
-            amount_out = intent.get("amount_out")
+            # amount_in = intent.get("amount_in")
+            # amount_out = intent.get("amount_out")
 
-            price = None
+            # price = None
 
-            try:
-                if amount_in and amount_out:
-                    price = amount_out / amount_in
-            except Exception:
-                price = None
+            # try:
+            #     if amount_in and amount_out:
+            #         price = amount_out / amount_in
+            # except Exception:
+            #     price = None
 
-            intent["price"] = price
+            # intent["price"] = price
 
             swaps.append(intent)
 
@@ -512,6 +540,7 @@ def main() -> None:
 
     if args.command == "tx":
         tx = client.fetch_transfer_by_tx(args.id)
+
         arbitrage_result = calculate_arbitrage(tx)
         print(arbitrage_result)
 

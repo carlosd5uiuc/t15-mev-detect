@@ -12,16 +12,12 @@ def detect_sandwich_attacks(transactions):
             if not s:
                 continue
 
-            swaps.append({
-                "tx_hash": s["tx_hash"],
-                "pool": s["pool"],
-                "trader": s.get("trader"),
-                "price": s.get("price"),
-                "direction": s.get("direction"),
-                "block_index": getattr(tx, "block_index", None),
-            })
+            swap = dict(s)
+            swap["block_index"] = getattr(tx, "block_index", None)
 
-    swaps.sort(key=lambda x: x["block_index"] or 999999)
+            swaps.append(swap)
+
+    swaps.sort(key=lambda x: x["transactionIndex"] if x["transactionIndex"] is not None else 999999)
 
     pool_map = defaultdict(list)
 
@@ -49,7 +45,7 @@ def detect_sandwich_attacks(transactions):
             if first["trader"] != last["trader"]:
                 continue
 
-            # victim must be different
+            # victim must be different from attacker
             if mid["trader"] == first["trader"]:
                 continue
 
@@ -61,13 +57,38 @@ def detect_sandwich_attacks(transactions):
             price_down = last["price"] < mid["price"]
 
             if price_up and price_down:
+                profit = None
+                profit_token = None
+
+                # Validate attacker round trip:
+                # bot_buy:  token A -> token B
+                # bot_sell: token B -> token A
+                if (
+                    first["token_in"] == last["token_out"]
+                    and first["token_out"] == last["token_in"]
+                ):
+                    profit_token = first["token_in"]
+                    profit = last["amount_out"] - first["amount_in"]
+
                 results.append({
                     "pool": pool,
                     "attacker": first["trader"],
                     "victim": mid["trader"],
+
                     "bot_buy": first,
                     "victim_swap": mid,
                     "bot_sell": last,
+
+                    "profit_token": profit_token,
+                    "gross_profit": profit,
+
+                    "front_tx_hash": first["tx_hash"],
+                    "victim_tx_hash": mid["tx_hash"],
+                    "back_tx_hash": last["tx_hash"],
+
+                    "front_index": first["transactionIndex"],
+                    "victim_index": mid["transactionIndex"],
+                    "back_index": last["transactionIndex"],
                 })
 
     return results

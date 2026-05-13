@@ -1,3 +1,5 @@
+from xmlrpc import client
+
 import pandas as pd
 import streamlit as st
 
@@ -16,6 +18,9 @@ st.title("MEV Detection Tool")
 if "arbitrage_rows" not in st.session_state:
     st.session_state.arbitrage_rows = []
 
+if "sandwich_rows" not in st.session_state:
+    st.session_state.sandwich_rows = []
+
 if "last_mode" not in st.session_state:
     st.session_state.last_mode = None
 
@@ -24,7 +29,7 @@ input_col, mev_col = st.columns(2)
 with input_col:
     mode = st.selectbox(
         "Input type",
-        ["Transaction Hash", "Block", "CSV Upload"]
+        ["Transaction Hash", "Block"]
     )
 
 if st.session_state.last_mode != mode:
@@ -32,9 +37,9 @@ if st.session_state.last_mode != mode:
     st.session_state.last_mode = mode
 
 if mode == "Transaction Hash":
-    mev_type_options = ["arbitrage"]
+    mev_type_options = ["Arbitrage"]
 else:
-    mev_type_options = ["arbitrage", "frontrun", "sandwich"]
+    mev_type_options = ["Arbitrage", "Sandwich"]
 
 with mev_col:
     mev_type = st.selectbox(
@@ -122,6 +127,122 @@ def format_arbitrage_results(rows, fetcher):
     return pd.DataFrame(formatted_rows)
 
 
+def format_sandwich_results(rows):
+    formatted = []
+
+    for row in rows:
+        bot_buy = row["bot_buy"]
+        victim_swap = row["victim_swap"]
+        bot_sell = row["bot_sell"]
+
+        formatted.append({
+            "Pool": row["pool"],
+
+            "Attacker": row["attacker"][:10] + "...",
+            "Full Attacker Address": row["attacker"],
+
+            "Victim": row["victim"][:10] + "...",
+            "Full Victim Address": row["victim"],
+
+            "Front Tx": bot_buy["tx_hash"][:10] + "...",
+            "Full Front Tx Hash": bot_buy["tx_hash"],
+
+            "Victim Tx": victim_swap["tx_hash"][:10] + "...",
+            "Full Victim Tx Hash": victim_swap["tx_hash"],
+
+            "Back Tx": bot_sell["tx_hash"][:10] + "...",
+            "Full Back Tx Hash": bot_sell["tx_hash"],
+
+            "Front Index": bot_buy["transactionIndex"],
+            "Victim Index": victim_swap["transactionIndex"],
+            "Back Index": bot_sell["transactionIndex"],
+
+            "Front Price": bot_buy["price"],
+            "Victim Price": victim_swap["price"],
+            "Back Price": bot_sell["price"],
+
+            "Profit Token": row.get("profit_token"),
+            "Gross Profit": row.get("gross_profit"),
+        })
+
+    return pd.DataFrame(formatted)
+
+def display_sandwich_table(rows):
+    df = format_sandwich_results(rows)
+
+    hidden_cols = [
+        "Full Attacker Address",
+        "Full Victim Address",
+        "Full Front Tx Hash",
+        "Full Victim Tx Hash",
+        "Full Back Tx Hash",
+    ]
+
+    visible_df = df.drop(columns=hidden_cols)
+
+    table_col, detail_col = st.columns([1, 1])
+
+    with table_col:
+        event = st.dataframe(
+            visible_df,
+            width="stretch",
+            hide_index=True,
+            on_select="rerun",
+            selection_mode="single-row",
+        )
+
+    with detail_col:
+        st.subheader("Sandwich Details")
+
+        selected_rows = event.selection.rows
+
+        if not selected_rows:
+            st.info("Select a row to view details.")
+            return
+
+        selected_index = selected_rows[0]
+        selected = df.iloc[selected_index]
+
+        with st.container(border=True):
+            st.write("**Pool**")
+            st.code(selected["Pool"])
+
+            st.write("**Attacker**")
+            st.code(selected["Full Attacker Address"])
+
+            st.write("**Victim**")
+            st.code(selected["Full Victim Address"])
+
+            st.write("**Front-run Transaction**")
+            st.code(selected["Full Front Tx Hash"])
+
+            st.write("**Victim Transaction**")
+            st.code(selected["Full Victim Tx Hash"])
+
+            st.write("**Back-run Transaction**")
+            st.code(selected["Full Back Tx Hash"])
+
+            st.write("**Transaction Order**")
+            st.code(
+                f'{selected["Front Index"]} -> '
+                f'{selected["Victim Index"]} -> '
+                f'{selected["Back Index"]}'
+            )
+
+            st.write("**Price Movement**")
+            st.code(
+                f'{selected["Front Price"]} -> '
+                f'{selected["Victim Price"]} -> '
+                f'{selected["Back Price"]}'
+            )
+
+            st.write("**Profit Token**")
+            st.code(str(selected["Profit Token"]))
+
+            st.write("**Gross Profit**")
+            st.code(str(selected["Gross Profit"]))
+
+
 if mode == "Transaction Hash":
     tx_hash = st.text_input("Transaction hash")
 
@@ -160,36 +281,53 @@ elif mode == "Block":
     block_number = st.number_input("Block number", min_value=0, step=1)
 
     if st.button("Analyze block"):
-        with st.spinner("Analyzing block..."):
-            fetcher = BlockchainFetcher()
+        if mev_type == "arbitrage":
+            with st.spinner("Analyzing block..."):
+                fetcher = BlockchainFetcher()
 
-            tx_transfers = fetcher.fetch_transfers_by_block_from_cache(
-                block_number=int(block_number)
-            )
+                tx_transfers = fetcher.fetch_transfers_by_block_from_cache(
+                    block_number=int(block_number)
+                )
 
-            all_results = []
+                all_results = []
 
-            for tx_hash, transfers in tx_transfers.items():
-                results = run_detection(mev_type, transfers)
+                for tx_hash, transfers in tx_transfers.items():
+                    results = run_detection(mev_type, transfers)
 
-                if results:
-                    for item in results:
-                        all_results.append({
-                            "tx": tx_hash,
-                            "address": item["address"],
-                            "token": item["token"],
-                            "value": item["value"],
-                        })
+                    if results:
+                        for item in results:
+                            all_results.append({
+                                "tx": tx_hash,
+                                "address": item["address"],
+                                "token": item["token"],
+                                "value": item["value"],
+                            })
 
-            st.session_state.arbitrage_rows = all_results
+                st.session_state.arbitrage_rows = all_results
 
-            if not all_results:
-                st.warning("No MEV pattern detected.")
+                if not all_results:
+                    st.warning("No MEV pattern detected.")
 
-    if st.session_state.arbitrage_rows:
+        elif mev_type == "sandwich":
+            with st.spinner("Analyzing block..."):
+                fetcher = BlockchainFetcher()
+                txs = fetcher.fetch_block_transactions(block_number)
+
+                results = detect_sandwich_attacks(txs)
+
+                st.session_state.sandwich_rows = results
+
+                if not results:
+                    st.warning("No sandwich attacks detected.")
+            
+    if mev_type == "arbitrage" and st.session_state.arbitrage_rows:
         fetcher = BlockchainFetcher()
         st.subheader("Results")
         display_arbitrage_table(st.session_state.arbitrage_rows, fetcher)
+
+    elif mev_type == "sandwich" and st.session_state.sandwich_rows:
+        st.subheader("Results")
+        display_sandwich_table(st.session_state.sandwich_rows)
 
 
 elif mode == "CSV Upload":

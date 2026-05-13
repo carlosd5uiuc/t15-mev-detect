@@ -1,2 +1,4 @@
 python main.py arbitrage tx 0xd5b0c82326493690e05c3ac4be63e8bb7763f1a99fbea6db293ec317c8ce5595
 # python main.py tx 0xb40645b935806060bbdbd7d623a621ddaa117b47b2d175d1fb60342e95157008
+# python main.py arbitrage tx 0x552e7588f7306e00589c18458c7700c1221295c3f87d330d88bf438eafbcb7a2
+# python main.py arbitrage tx 0xd5b0c82326493690e05c3ac4be63e8bb7763f1a99fbea6db293ec317c8ce5595

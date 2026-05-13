@@ -19,6 +19,14 @@
     "address": "0x56072c95faa701256059aa122697b133aded9279",
     "symbol": "SKY"
   },
+  "0x6b175474e89094c44da98b954eedeac495271d0f": {
+    "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+    "symbol": "DAI"
+  },
+  "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0": {
+    "address": "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
+    "symbol": "wstETH"
+  },
   "0x85f17cf997934a597031b2e18a9ab6ebd4b9f6a4": {
     "address": "0x85f17cf997934a597031b2e18a9ab6ebd4b9f6a4",
     "symbol": "NEAR"
