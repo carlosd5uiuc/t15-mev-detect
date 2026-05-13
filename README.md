@@ -3,6 +3,21 @@
 ## Data
 Extracted from Flashbots' [Mempool Dumpster](https://mempool-dumpster.flashbots.net/index.html)
 
+## API Key
+
+This project requires an Infura API key to connect to the Ethereum network.
+
+Create an Infura account and generate an API key at: [https://www.infura.io/](https://www.infura.io/)
+
+Then add the key to your environment variables:
+
+```env
+RPC_URL_KEY=YOUR_API_KEY
+```
+
+Replace `YOUR_API_KEY` with your actual Infura API key.
+
+
 ## Running the Streamlit GUI
 
 Activate the virtual environment:
